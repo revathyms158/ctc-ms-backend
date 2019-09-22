@@ -1,18 +1,19 @@
 package au.com.optus.ctc.model;
 
 public enum GenderEnum {
-    F("F"),M("M");
-    private final String name;
+
+    F("F"), M("M"), NA("F,M");
+
+    private final String value;
 
     private GenderEnum(String s) {
-        name = s;
+        this.value = s;
     }
 
-    public boolean equalsName(String otherName) {
-        return name.equals(otherName);
-    }
+    public String value() { return value; }
 
     public String toString() {
-        return this.name;
+        return this.value;
     }
+
 }

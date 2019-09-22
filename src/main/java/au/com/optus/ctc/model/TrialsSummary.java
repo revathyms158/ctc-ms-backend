@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -14,11 +15,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -29,55 +29,83 @@ import java.util.Date;
  */
 @Data
 @RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(value = {"id", "createdOn", "updatedOn"}, allowGetters = true)
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "users")
-public class AccountProfile {
-
+@Table(name = "trials_summary")
+public class TrialsSummary {
     @Setter(AccessLevel.PROTECTED)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id_users")
+    @Column(name = "id_trials_summary")
     private Long id;
 
     @NonNull
-    @Column(name = "first_name")
-    private String firstName;
+    @Column(name = "stage")
+    private String stage;
 
     @NonNull
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "subtype")
+    private String subtype;
+
+    @NonNull
+    @Column(name = "name")
+    private String name;
+
+    @NonNull
+    @Lob
+    @Column(name = "summary")
+    private String summary;
+
+    @NonNull
+    @Column(name = "phase")
+    private String phase;
+
+    @NonNull
+    @Column(name = "clinical_trialgov")
+    private String trialGovRegId;
+
+    @NonNull
+    @Column(name = "anzctr")
+    private String anzctrRegId;
+
+    @NonNull
+    @Column(name = "bct")
+    private String bct;
+
+    @NonNull
+    @Column(name = "location")
+    private String location;
+
+    @NonNull
+    @Column(name = "postcode")
+    private String postcode;
+
+    @NonNull
+    @Column(name = "gender")
+    private String gender;
+
+    @NonNull
+    @Column(name = "pmp")
+    private String pmp;
 
     @NonNull
     @Column(name = "age")
     private int age;
 
     @NonNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gender")
-    private GenderEnum gender;
+    @Column(name = "tumour_size")
+    private int tumourSize;
 
     @NonNull
-    @Column(name = "role")
-    private String role;
+    @Column(name = "node_number")
+    private String nodeNumber;
 
     @NonNull
-    @Column(name = "dob")
-    private Date dob;
-
-    @NonNull
-    @Column(name = "contact_number")
-    private String contactNumber;
-
-    @NonNull
-    @Column(name = "email")
-    private String emailAddress;
-
-    @NonNull
-    @Column(name = "address")
-    private String postCode;
+    @Column(name = "is_spread_to_other_parts")
+    private String spreadToOtherParts;
 
     @Column(name = "created_on", nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -90,5 +118,4 @@ public class AccountProfile {
     @Setter(AccessLevel.PROTECTED)
     @LastModifiedDate
     private Date updatedOn;
-
 }

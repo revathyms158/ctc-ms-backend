@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 
 
+/**
+ * @author revathyms
+ */
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping(value = "/api/ctc")
 public class MyAccountController {
@@ -29,18 +34,18 @@ public class MyAccountController {
     @Autowired
     MyAccountRepository repository;
 
-    @GetMapping(value = "/myaccount/accountProfile", headers = "Accept=application/json")
-    public String createAccountProfile(/*@RequestBody AccountProfile profile*/) throws JsonProcessingException {
+    @PostMapping(value = "/myaccount/accountProfile", headers = "Accept=application/json")
+    public String createAccountProfile(@RequestBody AccountProfile profile) throws JsonProcessingException {
 
-       /* if (profile != null){
+        if (profile != null){
             LOG.info("accountProfile, {}",profile);
             //myAccountService.validateProfile(profile);
             //todo init
-        }*/
-        AccountProfile accountProfile = new AccountProfile("firstName4","lastName", 45, GenderEnum.F, "user",new Date("12/12/1984"), "0456678980", "email4@mail.com", "2113");
+        }
+        //AccountProfile accountProfile = new AccountProfile("firstName4","lastName", 45, GenderEnum.F, "user",new Date("12/12/1984"), "0456678980", "email4@mail.com", "2113");
         //repository.save(profile);
 
-        return mapper.writeValueAsString(accountProfile);
+        return mapper.writeValueAsString(repository.save(profile));
     }
 
 }

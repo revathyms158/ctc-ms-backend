@@ -2,6 +2,9 @@ package au.com.optus.ctc.service;
 
 import au.com.optus.ctc.model.AccountProfile;
 
+/**
+ * @author revathyms
+ */
 public class MyAccountServiceImpl implements MyAccountServiceIF {
 
     @Override
@@ -11,6 +14,6 @@ public class MyAccountServiceImpl implements MyAccountServiceIF {
 
     @Override
     public boolean verifyProfile(AccountProfile profile) {
-        return false;
+        return true;
     }
 }
