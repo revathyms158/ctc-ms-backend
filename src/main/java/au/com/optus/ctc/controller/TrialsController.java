@@ -64,10 +64,10 @@ public class TrialsController {
         return  mapper.writeValueAsString(filterService.getMatchingTrials(condition));
     }
 
-    @PostMapping(value = "/SavedTrials", headers = "Accept=application/json")
-    public String fetchSavedTrials(/*@RequestBody AccountProfile profile*/)  {
+    @GetMapping(value = "/savedTrials", headers = "Accept=application/json")
+    public String fetchSavedTrials(/*@RequestBody AccountProfile profile*/) throws JsonProcessingException {
 
-        return  null;
+        return mapper.writeValueAsString(repository.findAll());
     }
 
     @PostMapping(value = "/removeTrials", headers = "Accept=application/json")

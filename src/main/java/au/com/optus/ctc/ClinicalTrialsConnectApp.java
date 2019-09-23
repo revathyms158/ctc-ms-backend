@@ -36,6 +36,7 @@ public class ClinicalTrialsConnectApp {
                     .authorizeRequests()
                     .anyRequest().authenticated()
                     .and()
+                    .csrf().disable()
                     .httpBasic();
             http.cors();
         }
