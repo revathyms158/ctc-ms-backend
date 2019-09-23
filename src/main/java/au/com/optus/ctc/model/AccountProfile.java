@@ -93,13 +93,4 @@ public class AccountProfile {
 	@LastModifiedDate
 	private Date updatedOn;
 
-	@Override
-	public String toString() {
-		return "First name :" + this.firstName + " Last Name: " + this.lastName + " Age: " + this.age + " Gender: "
-				+ this.gender + " Role: " + this.role + " Dob : " + this.dob + " Contact Number: " + this.contactNumber
-				+ " Email Address: " + this.emailAddress + " Post Code : " + this.postCode + " Created On : "
-				+ this.createdOn + " Updated On : " + this.updatedOn;
-
-	}
-
 }
