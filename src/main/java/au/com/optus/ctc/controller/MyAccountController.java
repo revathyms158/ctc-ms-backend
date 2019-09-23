@@ -3,6 +3,7 @@ package au.com.optus.ctc.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import au.com.optus.ctc.model.AccountProfile;
 /**
  * @author revathyms
  */
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping(value = "/api/ctc")
 public class MyAccountController {
