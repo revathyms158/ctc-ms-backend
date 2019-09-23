@@ -13,7 +13,7 @@ public class TrialFilterSpecification {
     }
 
     public static Specification<TrialsSummary> withGender(String gender) {
-        return (trialsSummaryRoot, cq, cb) -> cb.equal(trialsSummaryRoot.get("gender"), gender);
+        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("gender"), "%" + gender + "%");
     }
 
     public static Specification<TrialsSummary> hasPmp(String pmp) {
