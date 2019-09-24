@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Date;
+
 /**
  * @author revathyms
  */
@@ -26,5 +28,8 @@ public class TrialCondition {
     private String nodeNumber;
     private int stage;
     private String BRCAMutation;
+    private Date initialDiagnosis;
+    private String tumourType;
+
 
 }
