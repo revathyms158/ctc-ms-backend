@@ -81,7 +81,7 @@ public class TrialsSummary {
 
     @NonNull
     @Column(name = "postcode")
-    private String postcode;
+    private String postCode;
 
     @NonNull
     @Column(name = "gender")

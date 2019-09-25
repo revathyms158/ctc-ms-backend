@@ -22,7 +22,7 @@ public class TrialFilterServiceImpl implements TrialFilterServiceIF {
     @Override
     public List<TrialsSummary> getMatchingTrials(TrialCondition condition) {
         System.out.println("inside getMatchingTrials()");
-        if (condition.getTumourSize() != "Any") {
+        if (!condition.getTumourSize().equalsIgnoreCase("Any")) {
 
             return repository.findAll(TrialFilterSpecification.withGender(condition.getSex())
                     .and(TrialFilterSpecification.hasSpreadToOtherParts(condition.getSpreadToOtherParts()))
