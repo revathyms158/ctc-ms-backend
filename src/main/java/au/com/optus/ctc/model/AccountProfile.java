@@ -61,17 +61,17 @@ public class AccountProfile {
 	@Column(name = "gender")
 	private GenderEnum gender;
 
-	@NonNull
+	/*@NonNull
 	@Column(name = "role")
-	private String role;
+	private String role;*/
 
 	@NonNull
 	@Column(name = "dob")
 	private Date dob;
 
-	@NonNull
+	/*@NonNull
 	@Column(name = "contact_number")
-	private String contactNumber;
+	private String contactNumber;*/
 
 	@NonNull
 	@Column(name = "email")
