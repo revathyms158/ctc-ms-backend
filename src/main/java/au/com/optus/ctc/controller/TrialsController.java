@@ -66,8 +66,8 @@ public class TrialsController {
        //value {}{"pmp":"Y","age":24,"postCode":null,"sex":"F,M","nodalStatus":"Y/N","spreadToOtherParts":"N","tumourSize":"15","ecog":3,"nodeNumber":"1-3","stage":2,"brcamutation":"N","er":"NEG","pr":"NEG","her2":"NEG"}
         }*/
         List<TrialsSummary> result = new ArrayList<>();
-        if (StringUtils.isBlank(condition.getGender())) {
-            condition.setGender(GenderEnum.NA.value());
+        if (StringUtils.isBlank(condition.getSpreadToOtherParts()) || StringUtils.equalsIgnoreCase(condition.getSpreadToOtherParts(),"Y/N")) {
+            condition.setSpreadToOtherParts("N");
             result = filterService.getMatchingTrials(condition);
         } else {
             result = filterService.getMatchingTrials(condition);

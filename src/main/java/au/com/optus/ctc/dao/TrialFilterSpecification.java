@@ -9,11 +9,11 @@ import org.springframework.data.jpa.domain.Specification;
 public class TrialFilterSpecification {
 
     public static Specification<TrialsSummary> hasSpreadToOtherParts(String spreadToOtherParts) {
-        return (trialsSummaryRoot, cq, cb) -> cb.equal(trialsSummaryRoot.get("spreadToOtherParts"), spreadToOtherParts);
+        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("spreadToOtherParts"), "%" + spreadToOtherParts + "%");
     }
 
     public static Specification<TrialsSummary> withGender(String gender) {
-        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("gender"), "%" + "F,M" + "%");
+        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("gender"), "%" + gender + "%");
     }
 
     public static Specification<TrialsSummary> hasPmp(String pmp) {
