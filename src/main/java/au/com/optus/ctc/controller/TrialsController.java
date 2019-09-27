@@ -8,6 +8,7 @@ import au.com.optus.ctc.model.TrialsSummary;
 import au.com.optus.ctc.service.TrialFilterServiceIF;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author revathyms
@@ -61,7 +65,15 @@ public class TrialsController {
        /* if (condition != null) {
        //value {}{"pmp":"Y","age":24,"postCode":null,"sex":"F,M","nodalStatus":"Y/N","spreadToOtherParts":"N","tumourSize":"15","ecog":3,"nodeNumber":"1-3","stage":2,"brcamutation":"N","er":"NEG","pr":"NEG","her2":"NEG"}
         }*/
-        return  mapper.writeValueAsString(filterService.getMatchingTrials(condition));
+        List<TrialsSummary> result = new ArrayList<>();
+        if (StringUtils.isBlank(condition.getGender())) {
+            condition.setGender(GenderEnum.NA.value());
+            result = filterService.getMatchingTrials(condition);
+        } else {
+            result = filterService.getMatchingTrials(condition);
+        }
+        LOG.info("result :{}", result);
+        return  mapper.writeValueAsString(result);
     }
 
     @GetMapping(value = "/savedTrials", headers = "Accept=application/json")

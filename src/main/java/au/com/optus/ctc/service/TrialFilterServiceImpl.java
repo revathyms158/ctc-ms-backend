@@ -24,14 +24,14 @@ public class TrialFilterServiceImpl implements TrialFilterServiceIF {
         System.out.println("inside getMatchingTrials()");
         if (!condition.getTumourSize().equalsIgnoreCase("Any")) {
 
-            return repository.findAll(TrialFilterSpecification.withGender(condition.getSex())
+            return repository.findAll(TrialFilterSpecification.withGender(condition.getGender())
                     .and(TrialFilterSpecification.hasSpreadToOtherParts(condition.getSpreadToOtherParts()))
                     .and(TrialFilterSpecification.hasPmp(condition.getPmp()))
                     .and(TrialFilterSpecification.hasAge(condition.getAge()))
                     .and(TrialFilterSpecification.hasTumourSize(Integer.parseInt(condition.getTumourSize())))
                     .and(TrialFilterSpecification.hasNodeNumber(condition.getNodeNumber())));
         } else {
-            return repository.findAll(TrialFilterSpecification.withGender(condition.getSex())
+            return repository.findAll(TrialFilterSpecification.withGender(condition.getGender())
                     .and(TrialFilterSpecification.hasSpreadToOtherParts(condition.getSpreadToOtherParts()))
                     .and(TrialFilterSpecification.hasPmp(condition.getPmp()))
                     .and(TrialFilterSpecification.hasAge(condition.getAge()))

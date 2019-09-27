@@ -17,7 +17,7 @@ public class TrialCondition {
     private String pmp;
     private int age;
     private String postCode;
-    private String sex;
+    private String gender;
     private String nodalStatus;
     private String spreadToOtherParts;
     private String tumourSize;

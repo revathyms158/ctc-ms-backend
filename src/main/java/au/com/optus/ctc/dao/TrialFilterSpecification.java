@@ -13,15 +13,15 @@ public class TrialFilterSpecification {
     }
 
     public static Specification<TrialsSummary> withGender(String gender) {
-        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("gender"), "%" + gender + "%");
+        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("gender"), "%" + "F,M" + "%");
     }
 
     public static Specification<TrialsSummary> hasPmp(String pmp) {
-        return (trialsSummaryRoot, cq, cb) -> cb.equal(trialsSummaryRoot.get("pmp"), pmp);
+        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("pmp"), "%" + pmp + "%");
     }
 
     public static Specification<TrialsSummary> hasAge(int age) {
-        return (trialsSummaryRoot, cq, cb) -> cb.le(trialsSummaryRoot.get("age"), age);
+        return (trialsSummaryRoot, cq, cb) -> cb.le(trialsSummaryRoot.get("age"), 18);
     }
 
     public static Specification<TrialsSummary> hasTumourSize(int size) {
