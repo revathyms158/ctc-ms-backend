@@ -18,7 +18,7 @@ import au.com.optus.ctc.model.AccountProfile;
 /**
  * @author revathyms
  */
-@CrossOrigin(origins = {"http://localhost:4200"})
+@CrossOrigin(origins = {"http://172.31.5.10:4200"})
 @RestController
 @RequestMapping(value = "/api/ctc")
 public class MyAccountController {
