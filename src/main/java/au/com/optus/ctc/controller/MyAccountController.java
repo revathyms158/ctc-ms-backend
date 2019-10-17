@@ -1,9 +1,16 @@
 package au.com.optus.ctc.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.websocket.server.PathParam;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,13 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import au.com.optus.ctc.dao.MyAccountFilterSpecification;
 import au.com.optus.ctc.dao.MyAccountRepository;
 import au.com.optus.ctc.model.AccountProfile;
 
 /**
  * @author revathyms
  */
-@CrossOrigin(origins = {"http://172.31.5.10:4200"})
+@CrossOrigin(origins = { "http://172.31.5.10:4200" })
 @RestController
 @RequestMapping(value = "/api/ctc")
 public class MyAccountController {
@@ -31,7 +39,10 @@ public class MyAccountController {
 	@Autowired
 	MyAccountRepository repository;
 
-	@PostMapping(value = "/myaccount/accountProfile", headers = "Accept=application/json")
+	@Autowired
+	MyAccountFilterSpecification filterService;
+
+	@PostMapping(value = "/myaccount/createAccountProfile", headers = "Accept=application/json")
 	public String createAccountProfile(@RequestBody AccountProfile profile) throws JsonProcessingException {
 
 		if (profile != null) {
@@ -46,6 +57,19 @@ public class MyAccountController {
 
 		mapper.writeValueAsString(repository.save(profile));
 		return "Success";
+	}
+
+	@GetMapping(value = "/myaccount/getAccountProfile/{userId}", headers = "Accept=application/json")
+	public String getAccountProfile(@PathParam(value = "userId") String userId) throws JsonProcessingException {
+		List<AccountProfile> result = new ArrayList<>();
+		if (!StringUtils.isBlank(userId)) {
+			System.out.println("User Id : " + userId);
+			LOG.info("accountProfile for UserId: {}", userId);
+			result = (List<AccountProfile>) filterService.accWithUserId(userId);
+		}
+		LOG.info("result :{}", result);
+		return mapper.writeValueAsString(result);
+
 	}
 
 }
