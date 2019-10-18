@@ -26,7 +26,6 @@ import java.util.List;
  * @author revathyms
  */
 
-@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
 @RequestMapping(value = "/api/ctc/trials")
 public class TrialsController {
@@ -45,27 +44,16 @@ public class TrialsController {
     @PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
     public String fetchMatchingTrials(@RequestBody TrialCondition condition) throws JsonProcessingException {
         LOG.info("inside fetchMatchingTrials():: condition ->{}", condition);
-        /*TrialCondition condition1 = new TrialCondition();
-        condition1.setPmp(AnswerValueEnum.YES.value());
-        condition1.setBRCAMutation(AnswerValueEnum.NO.value());
-        condition1.setEcog(3);
-        condition1.setER(AnswerValueEnum.NEGATIVE.value());
-        condition1.setPR(AnswerValueEnum.NEGATIVE.value());
-        condition1.setHER2(AnswerValueEnum.NEGATIVE.value());
-        condition1.setSpreadToOtherParts(AnswerValueEnum.NO.value());
-        condition1.setNodalStatus(AnswerValueEnum.NOT_SURE.value());
-        condition1.setStage(2);
-        condition1.setTumourSize("15");
-        condition1.setNodeNumber("1-3");
-        condition1.setSex(GenderEnum.NA.value());
-        condition1.setAge(24);
-        condition1.setNodeNumber("1-3");
-        System.out.println("value {}" +mapper.writeValueAsString(condition1));*/
-        String trialCondition = "{\"pmp\":\"Y\",\"nodalStatus\":\"Y/N\",\"spreadToOtherParts\":\"N\",\"tumourSize\":15,\"ecog\":3,\"nodeNumber\":\"1-3\",\"stage\":2,\"her2\":\"NEG\",\"er\":\"NEG\",\"pr\":\"NEG\",\"brcamutation\":\"N\"}";
-       /* if (condition != null) {
-       //value {}{"pmp":"Y","age":24,"postCode":null,"sex":"F,M","nodalStatus":"Y/N","spreadToOtherParts":"N","tumourSize":"15","ecog":3,"nodeNumber":"1-3","stage":2,"brcamutation":"N","er":"NEG","pr":"NEG","her2":"NEG"}
-        }*/
         List<TrialsSummary> result = new ArrayList<>();
+        if(StringUtils.isBlank(condition.getGender())){
+            condition.setGender(GenderEnum.NA.value());
+        }
+        if(StringUtils.isBlank(condition.getTumourSize())){
+            condition.setTumourSize("Any");
+        }
+        if(StringUtils.isBlank(condition.getNodeNumber())){
+            condition.setNodeNumber("0");
+        }
         if (StringUtils.isBlank(condition.getSpreadToOtherParts()) || StringUtils.equalsIgnoreCase(condition.getSpreadToOtherParts(),"Y/N")) {
             condition.setSpreadToOtherParts("N");
             result = filterService.getMatchingTrials(condition);
