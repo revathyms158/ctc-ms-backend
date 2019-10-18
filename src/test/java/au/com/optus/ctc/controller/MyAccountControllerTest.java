@@ -46,7 +46,7 @@ public class MyAccountControllerTest {
     public void testCreateAccountProfile_success() throws Exception {
         AccountProfile profile = new AccountProfile("firstName4", "lastname", 45, GenderEnum.F,new Date(12 / 12 / 1984),  "email4@mail.com", "2113");
         String json = mapper.writeValueAsString(profile);
-        mvc.perform(post("http://localhost:9090/api/ctc/myaccount/accountProfile")
+        mvc.perform(post("http://localhost:9090/api/ctc/myaccount/createAccountProfile")
                 .content(json).accept(MediaType.APPLICATION_JSON)
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON).characterEncoding("UTF-8"))
