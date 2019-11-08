@@ -9,7 +9,9 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+import org.hibernate.validator.constraints.UniqueElements;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -32,16 +34,87 @@ import lombok.Setter;
 @JsonIgnoreProperties(value = { "id", "createdOn", "updatedOn" }, allowGetters = true)
 @EntityListeners(AuditingEntityListener.class)
 @Entity
-@Table(name = "user_details")
+@Table(name = "user_details", uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
 public class AccountProfile {
 	public AccountProfile() {
 		// TODO Auto-generated constructor stub
 	}
 
-
 	@Id
 	@Column(name = "id_users")
 	private String id;
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public GenderEnum getGender() {
+		return gender;
+	}
+
+	public void setGender(GenderEnum gender) {
+		this.gender = gender;
+	}
+
+	public Date getDob() {
+		return dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public String getPostCode() {
+		return postCode;
+	}
+
+	public void setPostCode(String postCode) {
+		this.postCode = postCode;
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
+	}
+
+	public void setCreatedOn(Date createdOn) {
+		this.createdOn = createdOn;
+	}
+
+	public Date getUpdatedOn() {
+		return updatedOn;
+	}
+
+	public void setUpdatedOn(Date updatedOn) {
+		this.updatedOn = updatedOn;
+	}
 
 	public String getId() {
 		return id;
@@ -88,9 +161,8 @@ public class AccountProfile {
 	 * 
 	 * @Column(name = "contact_number") private String contactNumber;
 	 */
-
 	@NonNull
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	@JsonProperty
 	private String emailAddress;
 

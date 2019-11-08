@@ -39,6 +39,9 @@ public class MyAccountControllerTest {
 	@WithMockUser("root")
 	@Test
 	public void testCreateAccountProfile_success() throws Exception {
+		// AccountProfile profile = new AccountProfile("firstName4", "lastname",
+		// 45, GenderEnum.F,
+		// new Date(12 / 12 / 1984), "email4@mail.com", "2113");
 		AccountProfile profile = new AccountProfile();
 		String json = mapper.writeValueAsString(profile);
 		mvc.perform(post("http://localhost:9090/api/ctc/myaccount/createAccountProfile").content(json)

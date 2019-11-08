@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import au.com.optus.ctc.dao.AccountProfileRepository;
 import au.com.optus.ctc.model.AccountProfile;
+import au.com.optus.ctc.model.AccountProfileResponse;
 import au.com.optus.ctc.service.MyAccountServiceIF;
 
 @CrossOrigin(origins = { "http://172.31.5.10:4200" })
@@ -40,15 +41,24 @@ public class MyAccountController {
 
 	@PostMapping(value = "/myaccount/createAccountProfile", consumes = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
-	public String createAccountProfile(@RequestBody AccountProfile profile) throws JsonProcessingException {
+	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
+			throws JsonProcessingException {
 		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
-		if (profile != null) {
-			LOG.info("accountProfile, {}", profile.toString());
-			profile.setId(UUID.randomUUID().toString());
-			mapper.writeValueAsString(repository.save(profile));
-		}
+		/*
+		 * if (profile != null) { LOG.info("accountProfile, {}",
+		 * profile.toString()); if
+		 * (filterService.findEmail(profile.getEmailAddress()) == 0) {
+		 * profile.setId(UUID.randomUUID().toString());
+		 * mapper.writeValueAsString(repository.save(profile)); }
+		 * 
+		 * }
+		 */
+		profile.setId(UUID.randomUUID().toString());
+		mapper.writeValueAsString(repository.save(profile));
 		LOG.info("ID generated for Profile _____________, {}", profile.getId());
-		return profile.getId();
+		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
+		accountProfileResponse.setId(profile.getId());
+		return accountProfileResponse;
 	}
 
 	@RequestMapping(value = "/myaccount/getAccountProfile/{userId}", method = RequestMethod.GET)
