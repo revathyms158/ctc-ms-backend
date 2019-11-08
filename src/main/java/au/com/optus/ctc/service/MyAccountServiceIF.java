@@ -1,15 +1,14 @@
 package au.com.optus.ctc.service;
 
-import java.util.List;
+import org.springframework.context.annotation.Configuration;
 
 import au.com.optus.ctc.model.AccountProfile;
 
+@Configuration
 public interface MyAccountServiceIF {
 
-    String createProfile(AccountProfile profile);
+	String createProfile(AccountProfile profile);
 
-    boolean verifyProfile(AccountProfile profile);
-
-	List<AccountProfile> getUserProfile(String UserId);
+	boolean verifyProfile(AccountProfile profile);
 
 }

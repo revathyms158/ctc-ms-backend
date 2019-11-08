@@ -1,84 +1,102 @@
 package au.com.optus.ctc.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-import javax.print.DocFlavor.STRING;
 
-import java.util.Date;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 /**
  * @author revathyms
  */
 @Data
 @RequiredArgsConstructor
-@AllArgsConstructor
 @JsonIgnoreProperties(value = { "id", "createdOn", "updatedOn" }, allowGetters = true)
 @EntityListeners(AuditingEntityListener.class)
 @Entity
 @Table(name = "user_details")
 public class AccountProfile {
+	public AccountProfile() {
+		// TODO Auto-generated constructor stub
+	}
 
-	@Setter(AccessLevel.PROTECTED)
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id_users")
-	private Long id;
+	private String id;
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	@NonNull
 	@Column(name = "first_name")
+	@JsonProperty
 	private String firstName;
 
 	@NonNull
 	@Column(name = "last_name")
+	@JsonProperty
 	private String lastName;
 
 	@NonNull
 	@Column(name = "age")
+	@JsonProperty
 	private int age;
 
 	@NonNull
 	@Enumerated(EnumType.STRING)
 	@Column(name = "gender")
+	@JsonProperty
 	private GenderEnum gender;
 
-	/*@NonNull
-	@Column(name = "role")
-	private String role;*/
+	/*
+	 * @NonNull
+	 * 
+	 * @Column(name = "role") private String role;
+	 */
 
 	@NonNull
 	@Column(name = "dob")
+	@JsonProperty
 	private Date dob;
 
-	/*@NonNull
-	@Column(name = "contact_number")
-	private String contactNumber;*/
+	/*
+	 * @NonNull
+	 * 
+	 * @Column(name = "contact_number") private String contactNumber;
+	 */
 
 	@NonNull
 	@Column(name = "email")
+	@JsonProperty
 	private String emailAddress;
 
 	@NonNull
 	@Column(name = "address")
+	@JsonProperty
 	private String postCode;
 
 	@Column(name = "created_on", nullable = false, updatable = false)
@@ -93,4 +111,10 @@ public class AccountProfile {
 	@LastModifiedDate
 	private Date updatedOn;
 
+	@Override
+	public String toString() {
+		return "AccountProfile [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age
+				+ ", gender=" + gender + ", dob=" + dob + ", emailAddress=" + emailAddress + ", postCode=" + postCode
+				+ ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + "]";
+	}
 }

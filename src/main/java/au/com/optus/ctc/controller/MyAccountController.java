@@ -1,31 +1,27 @@
 package au.com.optus.ctc.controller;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
-import javax.websocket.server.PathParam;
-
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import au.com.optus.ctc.dao.MyAccountFilterSpecification;
-import au.com.optus.ctc.dao.MyAccountRepository;
+import au.com.optus.ctc.dao.AccountProfileRepository;
 import au.com.optus.ctc.model.AccountProfile;
+import au.com.optus.ctc.service.MyAccountServiceIF;
 
-/**
- * @author revathyms
- */
 @CrossOrigin(origins = { "http://172.31.5.10:4200" })
 @RestController
 @RequestMapping(value = "/api/ctc")
@@ -37,38 +33,29 @@ public class MyAccountController {
 	ObjectMapper mapper;
 
 	@Autowired
-	MyAccountRepository repository;
+	AccountProfileRepository repository;
 
-	@Autowired
-	MyAccountFilterSpecification filterService;
+	@Autowired(required = false)
+	MyAccountServiceIF filterService;
 
-	@PostMapping(value = "/myaccount/createAccountProfile", headers = "Accept=application/json")
+	@PostMapping(value = "/myaccount/createAccountProfile", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
 	public String createAccountProfile(@RequestBody AccountProfile profile) throws JsonProcessingException {
-
+		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
 		if (profile != null) {
 			LOG.info("accountProfile, {}", profile.toString());
-			// myAccountService.validateProfile(profile);
-			// todo init
+			profile.setId(UUID.randomUUID().toString());
+			mapper.writeValueAsString(repository.save(profile));
 		}
-		// AccountProfile accountProfile = new
-		// AccountProfile("firstName4","lastName", 45, GenderEnum.F, "user",new
-		// Date("12/12/1984"), "0456678980", "email4@mail.com", "2113");
-		// repository.save(profile);
-
-		mapper.writeValueAsString(repository.save(profile));
-		return "Success";
+		LOG.info("ID generated for Profile _____________, {}", profile.getId());
+		return profile.getId();
 	}
 
-	@GetMapping(value = "/myaccount/getAccountProfile/{userId}", headers = "Accept=application/json")
-	public String getAccountProfile(@PathParam(value = "userId") String userId) throws JsonProcessingException {
-		List<AccountProfile> result = new ArrayList<>();
-		if (!StringUtils.isBlank(userId)) {
-			System.out.println("User Id : " + userId);
-			LOG.info("accountProfile for UserId: {}", userId);
-			result = (List<AccountProfile>) filterService.accWithUserId(userId);
-		}
-		LOG.info("result :{}", result);
-		return mapper.writeValueAsString(result);
+	@RequestMapping(value = "/myaccount/getAccountProfile/{userId}", method = RequestMethod.GET)
+	public Optional<AccountProfile> getAccountProfile(@PathVariable final String userId)
+			throws JsonProcessingException {
+		LOG.info(" Get accountProfile  ____________ for  ID: , {}", userId);
+		return repository.findById(userId);
 
 	}
 

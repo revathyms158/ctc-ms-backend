@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30">
+
+	<Properties>
+		<Property name="basePath">/home/ubuntu/clinical-trial/BackEnd/config</Property>
+	</Properties>
+	<Appenders>
+		<RollingFile name="fileLogger"
+			fileName="${basePath}/ctc.log"
+			filePattern="${basePath}/ctc-%d{yyyy-MM-dd}.log">
+			<DefaultRolloverStrategy max="10" />
+			<PatternLayout>
+				<pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n
+				</pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy interval="1"
+					modulate="true" />
+				<!-- File Max size param -->
+				<SizeBasedTriggeringPolicy size="50MB" />
+				<!-- File MaxBackupIndex param. 10 logs will be backed up -->
+			</Policies>
+		</RollingFile>
+	</Appenders>
+	<Loggers>
+		<Logger name="au.com.singtel.group.sdp.as.prepaid" level="INFO"
+			additivity="false">
+			<appender-ref ref="fileLogger" level="INFO" />
+		</Logger>
+		<Logger name="org.springframework.web.filter.CommonsRequestLoggingFilter"
+			level="INFO" additivity="false">
+			<appender-ref ref="fileLogger" level="INFO" />
+		</Logger>
+		<Logger name="org.springframework.web" level="INFO">
+			<appender-ref ref="fileLogger" level="INFO" />
+		</Logger>
+
+		<Logger name="org.springframework.ws.client.MessageTracing.sent"
+			level="TRACE" additivity="false">
+			<appender-ref ref="fileLogger" level="TRACE" />
+		</Logger>
+		<Logger name="org.springframework.ws.client.MessageTracing.received"
+			level="TRACE" additivity="false">
+			<appender-ref ref="fileLogger" level="TRACE" />
+		</Logger>
+		<Logger name="org.springframework.ws.server.MessageTracing"
+			level="TRACE" additivity="false">
+			<appender-ref ref="fileLogger" level="TRACE" />
+		</Logger>
+		<Logger name="au.com.singtel.group.sdp.as.nbn." level="DEBUG"
+			additivity="true">
+			<appender-ref ref="fileLogger" level="DEBUG" />
+		</Logger>
+		<!-- Dont change log level for below filter. It should always be DEBUG 
+			to print -->
+		<Logger name="org.springframework.web.filter.CommonsRequestLoggingFilter"
+			level="DEBUG" additivity="true">
+			<appender-ref ref="fileLogger" level="DEBUG" />
+		</Logger>
+		<Root level="DEBUG" additivity="false">
+			<appender-ref ref="fileLogger" />
+		</Root>
+	</Loggers>
+</Configuration>
