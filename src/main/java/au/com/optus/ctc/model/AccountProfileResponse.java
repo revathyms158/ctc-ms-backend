@@ -1,6 +1,9 @@
 package au.com.optus.ctc.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class AccountProfileResponse {
+	@JsonProperty
 	private String id;
 
 	public String getId() {
