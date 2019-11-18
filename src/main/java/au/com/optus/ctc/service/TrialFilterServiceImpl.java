@@ -2,6 +2,7 @@ package au.com.optus.ctc.service;
 
 import au.com.optus.ctc.dao.TrialFilterSpecification;
 import au.com.optus.ctc.dao.TrialsSummaryRepository;
+import au.com.optus.ctc.model.CTCConstants;
 import au.com.optus.ctc.model.TrialCondition;
 import au.com.optus.ctc.model.TrialsSummary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class TrialFilterServiceImpl implements TrialFilterServiceIF {
     @Override
     public List<TrialsSummary> getMatchingTrials(TrialCondition condition) {
         System.out.println("inside getMatchingTrials()");
-        if (!condition.getTumourSize().equalsIgnoreCase("Any")) {
+        if (!condition.getTumourSize().equalsIgnoreCase(CTCConstants.CONDITION_UNKNOWN)) {
 
             return repository.findAll(TrialFilterSpecification.withGender(condition.getGender())
                     .and(TrialFilterSpecification.hasSpreadToOtherParts(condition.getSpreadToOtherParts()))

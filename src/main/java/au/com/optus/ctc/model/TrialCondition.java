@@ -14,6 +14,7 @@ import java.util.Date;
 @Data
 public class TrialCondition {
 
+    private String userId;
     private String pmp;
     private int age;
     private String postCode;
