@@ -1,3 +1,4 @@
+/*
 package au.com.optus.ctc.controller;
 
 import au.com.optus.ctc.dao.TrialsSummaryRepository;
@@ -19,9 +20,11 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+*/
 /**
  * @author revathyms
- */
+ *//*
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -54,3 +57,4 @@ public class TrialsControllerTest {
     }
 
 }
+*/

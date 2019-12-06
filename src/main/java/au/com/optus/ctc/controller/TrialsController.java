@@ -1,6 +1,9 @@
 package au.com.optus.ctc.controller;
 
+import au.com.optus.ctc.dao.MyAccountRepository;
+import au.com.optus.ctc.dao.TrialsConditionRepository;
 import au.com.optus.ctc.dao.TrialsSummaryRepository;
+import au.com.optus.ctc.model.AccountProfile;
 import au.com.optus.ctc.model.AnswerValueEnum;
 import au.com.optus.ctc.model.GenderEnum;
 import au.com.optus.ctc.model.TrialCondition;
@@ -14,6 +17,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +31,7 @@ import java.util.List;
  * @author revathyms
  */
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping(value = "/api/ctc/trials")
 public class TrialsController {
@@ -36,7 +42,12 @@ public class TrialsController {
     ObjectMapper mapper;
 
     @Autowired
+    MyAccountRepository accrepo;
+
+    @Autowired
     TrialsSummaryRepository repository;
+    @Autowired
+    TrialsConditionRepository trialsConditionRepository;
 
     @Autowired
     TrialFilterServiceIF filterService;
@@ -61,13 +72,37 @@ public class TrialsController {
             result = filterService.getMatchingTrials(condition);
         }
         LOG.info("result :{}", result);
-        return  mapper.writeValueAsString(result);
+        return  mapper.writeValueAsString(result
+        /*TrialCondition condition1 = new TrialCondition();
+        condition1.setPmp(AnswerValueEnum.YES.value());
+        condition1.setBRCAMutation(AnswerValueEnum.NO.value());
+        condition1.setEcog(3);
+        condition1.setER(AnswerValueEnum.NEGATIVE.value());
+        condition1.setPR(AnswerValueEnum.NEGATIVE.value());
+        condition1.setHER2(AnswerValueEnum.NEGATIVE.value());
+        condition1.setSpreadToOtherParts(AnswerValueEnum.NO.value());
+        condition1.setNodalStatus(AnswerValueEnum.NOT_SURE.value());
+        condition1.setStage(2);
+        condition1.setTumourSize("15");
+        condition1.setNodeNumber("1-3");
+        condition1.setSex(GenderEnum.NA.value());
+        condition1.setAge(24);
+        condition1.setNodeNumber("1-3");
+        System.out.println("value {}" +mapper.writeValueAsString(condition1));*/
+        String trialCondition = "{\"pmp\":\"Y\",\"nodalStatus\":\"Y/N\",\"spreadToOtherParts\":\"N\",\"tumourSize\":15,\"ecog\":3,\"nodeNumber\":\"1-3\",\"stage\":2,\"her2\":\"NEG\",\"er\":\"NEG\",\"pr\":\"NEG\",\"brcamutation\":\"N\"}";
+       /* if (condition != null) {
+       //value {}{"pmp":"Y","age":24,"postCode":null,"sex":"F,M","nodalStatus":"Y/N","spreadToOtherParts":"N","tumourSize":"15","ecog":3,"nodeNumber":"1-3","stage":2,"brcamutation":"N","er":"NEG","pr":"NEG","her2":"NEG"}
+        }*/
+    if(condition != null) {
+        mapper.writeValueAsString(trialsConditionRepository.save(condition));
+  }
+        return  mapper.writeValueAsString(filterService.getMatchingTrials(condition));
     }
 
-    @GetMapping(value = "/savedTrials", headers = "Accept=application/json")
-    public String fetchSavedTrials(/*@RequestBody AccountProfile profile*/) throws JsonProcessingException {
-
-        return mapper.writeValueAsString(repository.findAll());
+    @GetMapping(value = "/userTrialConditions/{id}", headers = "Accept=application/json")
+    public String fetchSavedTrials( @PathVariable("id") Long id) throws JsonProcessingException {
+        TrialCondition condition = trialsConditionRepository.findById(id).get();
+        return mapper.writeValueAsString(condition);
     }
 
     @PostMapping(value = "/removeTrials", headers = "Accept=application/json")
