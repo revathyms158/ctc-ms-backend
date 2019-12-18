@@ -54,24 +54,25 @@ public class TrialsController {
         if (StringUtils.isNotBlank(condition.getUserId())) {
 
             Optional<AccountProfile> profile = profileRepository.findById(condition.getUserId());
-            profile.get().getGender();
-            if (StringUtils.isBlank(condition.getGender())) {
-                condition.setGender(GenderEnum.NA.value());
-            }
-            if (StringUtils.isBlank(condition.getTumourSize())) {
-                condition.setTumourSize(CTCConstants.CONDITION_UNKNOWN);
-            }
-            if (StringUtils.isBlank(condition.getNodeNumber())) {
-                condition.setNodeNumber(CTCConstants.NODE_NUMBER_UNKNOWN);
-            }
-            if (StringUtils.isBlank(condition.getSpreadToOtherParts()) ||
-                    StringUtils.equalsIgnoreCase(condition.getSpreadToOtherParts(), AnswerValueEnum.NOT_SURE.value())) {
-                condition.setSpreadToOtherParts(AnswerValueEnum.NO.value());
-                result = filterService.getMatchingTrials(condition);
-            } else {
-                result = filterService.getMatchingTrials(condition);
-            }
+            if (profile.isPresent()) {
+                if (StringUtils.isBlank(profile.get().getGender().value())) {
+                    condition.setGender(GenderEnum.NA.value());
+                }
+                if (StringUtils.isBlank(condition.getTumourSize())) {
+                    condition.setTumourSize(CTCConstants.CONDITION_UNKNOWN);
+                }
+                if (StringUtils.isBlank(condition.getNodeNumber())) {
+                    condition.setNodeNumber(CTCConstants.NODE_NUMBER_UNKNOWN);
+                }
+                if (StringUtils.isBlank(condition.getSpreadToOtherParts()) ||
+                        StringUtils.equalsIgnoreCase(condition.getSpreadToOtherParts(), AnswerValueEnum.NOT_SURE.value())) {
+                    condition.setSpreadToOtherParts(AnswerValueEnum.NO.value());
+                    result = filterService.getMatchingTrials(condition);
+                } else {
+                    result = filterService.getMatchingTrials(condition);
+                }
 
+            }
         }
         LOG.info("result :{}", result);
         return mapper.writeValueAsString(result);
@@ -85,7 +86,6 @@ public class TrialsController {
 
     @PostMapping(value = "/removeTrials", headers = "Accept=application/json")
     public String fetchRemovedTrials(/*@RequestBody AccountProfile profile*/)  {
-
         return  null;
     }
 
