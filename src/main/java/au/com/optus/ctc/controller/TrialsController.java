@@ -1,6 +1,6 @@
 package au.com.optus.ctc.controller;
 
-import au.com.optus.ctc.dao.MyAccountRepository;
+import au.com.optus.ctc.dao.AccountProfileRepository;
 import au.com.optus.ctc.dao.TrialsConditionRepository;
 import au.com.optus.ctc.dao.TrialsSummaryRepository;
 import au.com.optus.ctc.model.AccountProfile;
@@ -42,7 +42,7 @@ public class TrialsController {
     ObjectMapper mapper;
 
     @Autowired
-    MyAccountRepository accrepo;
+    AccountProfileRepository accrepo;
 
     @Autowired
     TrialsSummaryRepository repository;
@@ -72,31 +72,12 @@ public class TrialsController {
             result = filterService.getMatchingTrials(condition);
         }
         LOG.info("result :{}", result);
-        return  mapper.writeValueAsString(result
-        /*TrialCondition condition1 = new TrialCondition();
-        condition1.setPmp(AnswerValueEnum.YES.value());
-        condition1.setBRCAMutation(AnswerValueEnum.NO.value());
-        condition1.setEcog(3);
-        condition1.setER(AnswerValueEnum.NEGATIVE.value());
-        condition1.setPR(AnswerValueEnum.NEGATIVE.value());
-        condition1.setHER2(AnswerValueEnum.NEGATIVE.value());
-        condition1.setSpreadToOtherParts(AnswerValueEnum.NO.value());
-        condition1.setNodalStatus(AnswerValueEnum.NOT_SURE.value());
-        condition1.setStage(2);
-        condition1.setTumourSize("15");
-        condition1.setNodeNumber("1-3");
-        condition1.setSex(GenderEnum.NA.value());
-        condition1.setAge(24);
-        condition1.setNodeNumber("1-3");
-        System.out.println("value {}" +mapper.writeValueAsString(condition1));*/
-        String trialCondition = "{\"pmp\":\"Y\",\"nodalStatus\":\"Y/N\",\"spreadToOtherParts\":\"N\",\"tumourSize\":15,\"ecog\":3,\"nodeNumber\":\"1-3\",\"stage\":2,\"her2\":\"NEG\",\"er\":\"NEG\",\"pr\":\"NEG\",\"brcamutation\":\"N\"}";
-       /* if (condition != null) {
-       //value {}{"pmp":"Y","age":24,"postCode":null,"sex":"F,M","nodalStatus":"Y/N","spreadToOtherParts":"N","tumourSize":"15","ecog":3,"nodeNumber":"1-3","stage":2,"brcamutation":"N","er":"NEG","pr":"NEG","her2":"NEG"}
-        }*/
-    if(condition != null) {
-        mapper.writeValueAsString(trialsConditionRepository.save(condition));
-  }
-        return  mapper.writeValueAsString(filterService.getMatchingTrials(condition));
+        return mapper.writeValueAsString(result);
+/*
+        if (condition != null) {
+            mapper.writeValueAsString(trialsConditionRepository.save(condition));
+        }
+        return mapper.writeValueAsString(filterService.getMatchingTrials(condition));*/
     }
 
     @GetMapping(value = "/userTrialConditions/{id}", headers = "Accept=application/json")

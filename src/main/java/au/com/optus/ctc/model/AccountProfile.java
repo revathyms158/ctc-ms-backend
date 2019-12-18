@@ -1,6 +1,7 @@
 package au.com.optus.ctc.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -44,28 +45,16 @@ import java.util.Set;
 @Entity
 @Table(name = "user_details", uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
 public class AccountProfile {
-	public AccountProfile() {
-		// TODO Auto-generated constructor stub
-	}
 
 	@Id
 	@Column(name = "id_users")
 	private String id;
 
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(cascade = {CascadeType.ALL})
 	@JoinTable(
 			name = "User_Trials_Summary",
-			joinColumns = { @JoinColumn(name = "user_id") },
-			inverseJoinColumns = { @JoinColumn(name = "trial_summary_id") }
+			joinColumns = {@JoinColumn(name = "user_id")},
+			inverseJoinColumns = {@JoinColumn(name = "trial_summary_id")}
 	)
 	private Set<TrialsSummary> summary;
 
@@ -92,7 +81,7 @@ public class AccountProfile {
 
 	/*
 	 * @NonNull
-	 * 
+	 *
 	 * @Column(name = "role") private String role;
 	 */
 
@@ -103,7 +92,7 @@ public class AccountProfile {
 
 	/*
 	 * @NonNull
-	 * 
+	 *
 	 * @Column(name = "contact_number") private String contactNumber;
 	 */
 	@NonNull
@@ -134,100 +123,5 @@ public class AccountProfile {
 				+ ", gender=" + gender + ", dob=" + dob + ", emailAddress=" + emailAddress + ", postCode=" + postCode
 				+ ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + "]";
 
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Set<TrialsSummary> getSummary() {
-		return summary;
-	}
-
-	public void setSummary(Set<TrialsSummary> summary) {
-		this.summary = summary;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public GenderEnum getGender() {
-		return gender;
-	}
-
-	public void setGender(GenderEnum gender) {
-		this.gender = gender;
-	}
-
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public Date getDob() {
-		return dob;
-	}
-
-	public void setDob(Date dob) {
-		this.dob = dob;
-	}
-
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
-	public String getPostCode() {
-		return postCode;
-	}
-
-	public void setPostCode(String postCode) {
-		this.postCode = postCode;
-	}
-
-	public Date getCreatedOn() {
-		return createdOn;
-	}
-
-	public void setCreatedOn(Date createdOn) {
-		this.createdOn = createdOn;
-	}
-
-	public Date getUpdatedOn() {
-		return updatedOn;
-	}
-
-	public void setUpdatedOn(Date updatedOn) {
-		this.updatedOn = updatedOn;
 	}
 }

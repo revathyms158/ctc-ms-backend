@@ -1,6 +1,5 @@
 package au.com.optus.ctc.controller;
 
-<<<<<<< Updated upstream
 import java.util.Optional;
 import java.util.UUID;
 
@@ -89,14 +88,14 @@ public class MyAccountController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	public void deleteUser(@PathVariable("id") Long id) {
+	public void deleteUser(@PathVariable("id") String id) {
 		AccountProfile account = repository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
 		repository.delete(account);
 	}
 
 	@PutMapping("/users/{id}")
-	public String createOrUpdateUser(@RequestBody AccountProfile account, @PathVariable Long id)  throws JsonProcessingException
+	public String createOrUpdateUser(@RequestBody AccountProfile account, @PathVariable String id)  throws JsonProcessingException
 	{
 		Optional<AccountProfile> user = repository.findById(id);
 

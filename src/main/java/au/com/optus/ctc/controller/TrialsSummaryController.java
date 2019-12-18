@@ -1,19 +1,17 @@
 package au.com.optus.ctc.controller;
 
-import au.com.optus.ctc.dao.MyAccountRepository;
+import au.com.optus.ctc.dao.AccountProfileRepository;
 import au.com.optus.ctc.dao.TrialsSummaryRepository;
 import au.com.optus.ctc.model.AccountProfile;
 import au.com.optus.ctc.model.TrialsSummary;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,7 +35,7 @@ public class TrialsSummaryController {
     TrialsSummaryRepository repository;
 
     @Autowired
-    MyAccountRepository accountRepository;
+    AccountProfileRepository accountRepository;
 
     @GetMapping(value = "/{id}", headers = "Accept=application/json")
     public String fetchTrialsSummaryDetails(@PathVariable("id") Long id) throws JsonProcessingException {
@@ -46,7 +44,7 @@ public class TrialsSummaryController {
     }
 
     @PostMapping(value = "/userTrialsSummary", headers = "Accept=application/json")
-    public String saveUserTrialsSummary(@RequestBody TrialsSummary summary,  @PathVariable Long id) throws JsonProcessingException {
+    public String saveUserTrialsSummary(@RequestBody TrialsSummary summary,  @PathVariable String id) throws JsonProcessingException {
         Optional<AccountProfile> user = accountRepository.findById(id);
         HashSet<AccountProfile> account = new HashSet<>();
         account.add(user.get());

@@ -51,7 +51,7 @@ public class TrialCondition {
 
     @NonNull
     @Column(name = "postCode")
-    private String postCode
+    private String postCode;
 
     @NonNull
     @Column(name = "gender")
