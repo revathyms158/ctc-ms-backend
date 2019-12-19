@@ -16,6 +16,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 /**
  * @author revathyms
  */
+
 @EnableWebMvc
 @EnableConfigurationProperties
 @EntityScan(basePackages = { "au.com.optus.ctc.model" })

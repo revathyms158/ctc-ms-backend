@@ -1,5 +1,7 @@
 package au.com.optus.ctc.dao;
 
+import au.com.optus.ctc.model.AccountProfile;
+import au.com.optus.ctc.model.TrialCondition;
 import au.com.optus.ctc.model.TrialsSummary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -11,9 +13,12 @@ import java.util.List;
 /**
  * @author revathyms
  */
+
 @Repository
 public interface TrialsSummaryRepository extends JpaRepository<TrialsSummary, Long>, JpaSpecificationExecutor<TrialsSummary> {
 
     public List<TrialsSummary> findByName(String name);
 
 }
+
+

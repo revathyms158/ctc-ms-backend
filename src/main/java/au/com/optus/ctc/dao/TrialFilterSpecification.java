@@ -28,6 +28,9 @@ public class TrialFilterSpecification {
     public static Specification<TrialsSummary> hasAge(int age) {
         return (trialsSummaryRoot, cq, cb) -> cb.le(trialsSummaryRoot.get("age"), 18);
     }
+   // public static Specification<TrialsSummary> hasAge(int age) {
+       // return (trialsSummaryRoot, cq, cb) -> cb.le(trialsSummaryRoot.get("age"), age);
+    //}
 
     public static Specification<TrialsSummary> hasTumourSize(int size) {
         return (trialsSummaryRoot, cq, cb) -> cb.le(trialsSummaryRoot.get("tumourSize"), size);
