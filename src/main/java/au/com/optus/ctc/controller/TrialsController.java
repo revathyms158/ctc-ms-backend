@@ -1,7 +1,6 @@
 package au.com.optus.ctc.controller;
 
 import au.com.optus.ctc.dao.TrialsSummaryRepository;
-import au.com.optus.ctc.model.AnswerValueEnum;
 import au.com.optus.ctc.model.GenderEnum;
 import au.com.optus.ctc.model.TrialCondition;
 import au.com.optus.ctc.model.TrialsSummary;
@@ -12,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
