@@ -1,13 +1,18 @@
 package au.com.optus.ctc.model;
 
 import java.util.Date;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -52,6 +57,14 @@ public class AccountProfile {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(
+			name = "User_Trials_Summary",
+			joinColumns = { @JoinColumn(name = "user_id") },
+			inverseJoinColumns = { @JoinColumn(name = "trial_summary_id") }
+	)
+	private Set<TrialsSummary> summary;
 
 	@NonNull
 	@Column(name = "first_name")
@@ -112,6 +125,13 @@ public class AccountProfile {
 	@LastModifiedDate
 	private Date updatedOn;
 
+	public Set<TrialsSummary> getSummary() {
+		return summary;
+	}
+
+	public void setSummary(Set<TrialsSummary> summary) {
+		this.summary = summary;
+	}
 	@Override
 	public String toString() {
 		return "AccountProfile [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age
