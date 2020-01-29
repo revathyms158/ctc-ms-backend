@@ -1,6 +1,5 @@
 package au.com.optus.ctc.controller;
 
-import au.com.optus.ctc.dao.TrialsConditionRepository;
 import au.com.optus.ctc.dao.TrialsSummaryRepository;
 import au.com.optus.ctc.model.GenderEnum;
 import au.com.optus.ctc.model.TrialCondition;
@@ -38,9 +37,6 @@ public class TrialsController {
     TrialsSummaryRepository repository;
 
     @Autowired
-    TrialsConditionRepository trialsConditionRepository;
-
-    @Autowired
     TrialFilterServiceIF filterService;
 
     @PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
@@ -61,9 +57,6 @@ public class TrialsController {
             result = filterService.getMatchingTrials(condition);
         } else {
             result = filterService.getMatchingTrials(condition);
-        }
-        if(condition != null) {
-            mapper.writeValueAsString(trialsConditionRepository.save(condition));
         }
         LOG.info("result :{}", result);
         return  mapper.writeValueAsString(result);

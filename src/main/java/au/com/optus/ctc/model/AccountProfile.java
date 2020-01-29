@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -59,9 +58,13 @@ public class AccountProfile {
 		this.id = id;
 	}
 
-	@OneToOne
-	@JoinColumn(name="user_trial_condition")
-	private TrialCondition condition;
+	@ManyToMany(cascade = { CascadeType.ALL })
+	@JoinTable(
+			name = "User_Trials_Summary",
+			joinColumns = { @JoinColumn(name = "user_id") },
+			inverseJoinColumns = { @JoinColumn(name = "trial_summary_id") }
+	)
+	private Set<TrialsSummary> summary;
 
 	@NonNull
 	@Column(name = "first_name")
@@ -122,7 +125,13 @@ public class AccountProfile {
 	@LastModifiedDate
 	private Date updatedOn;
 
+	public Set<TrialsSummary> getSummary() {
+		return summary;
+	}
 
+	public void setSummary(Set<TrialsSummary> summary) {
+		this.summary = summary;
+	}
 	@Override
 	public String toString() {
 		return "AccountProfile [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age
