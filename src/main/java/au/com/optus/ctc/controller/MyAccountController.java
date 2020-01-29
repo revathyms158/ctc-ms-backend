@@ -1,5 +1,6 @@
 package au.com.optus.ctc.controller;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -8,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,7 +52,7 @@ public class MyAccountController {
 		 * (filterService.findEmail(profile.getEmailAddress()) == 0) {
 		 * profile.setId(UUID.randomUUID().toString());
 		 * mapper.writeValueAsString(repository.save(profile)); }
-		 * 
+		 *
 		 * }
 		 */
 		profile.setId(UUID.randomUUID().toString());
@@ -68,5 +70,11 @@ public class MyAccountController {
 		return repository.findById(userId);
 
 	}
+
+    @GetMapping(value = "/users",  headers = "Accept=application/json")
+    public String getAllUsers() throws JsonProcessingException {
+        List<AccountProfile> accounts = repository.findAll();
+        return mapper.writeValueAsString(repository.findAll());
+    }
 
 }
