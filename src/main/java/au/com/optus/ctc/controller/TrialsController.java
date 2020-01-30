@@ -75,14 +75,10 @@ public class TrialsController {
 
         //Code added to save the questions answered by user
         //We will get the value of userId from front end. currently we are hardcoding it as I have value for userId=16
-         userId =16L;
+         userId =26L;
         Optional<AccountProfile> account = accountProfileRepository.findById(userId);
-        LOG.info("user :{}", account);
-
-
         if(account != null) {
             condition.setAccount(account.get());
-            LOG.info("condition :{}", condition);
             mapper.writeValueAsString(trialsConditionRepository.save(condition));
         }
         return  mapper.writeValueAsString(result);
@@ -96,8 +92,8 @@ public class TrialsController {
 
     @GetMapping(value = "/usersSavedTrials",  headers = "Accept=application/json")
     public String getAllUsersSavedTrials() throws JsonProcessingException {
-        List<TrialCondition> accounts = trialsConditionRepository.findAll();
-        return mapper.writeValueAsString(accounts);
+        List<TrialCondition> condition = trialsConditionRepository.findAll();
+        return mapper.writeValueAsString(condition);
     }
 
 

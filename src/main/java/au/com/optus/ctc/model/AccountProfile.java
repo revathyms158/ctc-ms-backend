@@ -60,8 +60,8 @@ public class AccountProfile {
     @JoinColumn(name="ques_id", referencedColumnName = "question_id")
     private TrialCondition condition;*/
 
-    @OneToOne(mappedBy="account")
-    private TrialCondition condition;
+    /*@OneToOne(mappedBy="account")
+    private TrialCondition condition;*/
 
 	@NonNull
 	@Column(name = "first_name")

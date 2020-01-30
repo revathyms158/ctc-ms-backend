@@ -42,7 +42,7 @@ public class TrialCondition {
     private AccountProfile account;*/
 
     @OneToOne
-    @JoinColumn(name="account_id", referencedColumnName = "id_users")
+    @JoinColumn(name="account_id")
     private AccountProfile account;
 
     @Column(name = "pmp")
