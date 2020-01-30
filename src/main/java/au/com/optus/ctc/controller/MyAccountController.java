@@ -39,6 +39,29 @@ public class MyAccountController {
 	@Autowired(required = false)
 	MyAccountServiceIF filterService;
 
+	/*@PostMapping(value = "/myaccount/createAccountProfile", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
+	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
+			throws JsonProcessingException {
+		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
+		*//*
+		 * if (profile != null) { LOG.info("accountProfile, {}",
+		 * profile.toString()); if
+		 * (filterService.findEmail(profile.getEmailAddress()) == 0) {
+		 * profile.setId(UUID.randomUUID().toString());
+		 * mapper.writeValueAsString(repository.save(profile)); }
+		 * 
+		 * }
+		 *//*
+		profile.setId(UUID.randomUUID().toString());
+		mapper.writeValueAsString(repository.save(profile));
+		LOG.info("ID generated for Profile _____________, {}", profile.getId());
+		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
+		accountProfileResponse.setId(profile.getId());
+		return accountProfileResponse;
+	}*/
+
+
 	@PostMapping(value = "/myaccount/createAccountProfile", consumes = { MediaType.APPLICATION_JSON_VALUE,
 			MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
 	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
@@ -50,19 +73,19 @@ public class MyAccountController {
 		 * (filterService.findEmail(profile.getEmailAddress()) == 0) {
 		 * profile.setId(UUID.randomUUID().toString());
 		 * mapper.writeValueAsString(repository.save(profile)); }
-		 * 
+		 *
 		 * }
 		 */
-		profile.setId(UUID.randomUUID().toString());
-		mapper.writeValueAsString(repository.save(profile));
-		LOG.info("ID generated for Profile _____________, {}", profile.getId());
+    	AccountProfile user = repository.save(profile);
+		mapper.writeValueAsString(user);
+		LOG.info("ID generated for Profile _____________, {}", user.getId());
 		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
-		accountProfileResponse.setId(profile.getId());
+		accountProfileResponse.setId(user.getId());
 		return accountProfileResponse;
 	}
 
 	@RequestMapping(value = "/myaccount/getAccountProfile/{userId}", method = RequestMethod.GET)
-	public Optional<AccountProfile> getAccountProfile(@PathVariable final String userId)
+	public Optional<AccountProfile> getAccountProfile(@PathVariable final Long userId)
 			throws JsonProcessingException {
 		LOG.info(" Get accountProfile  ____________ for  ID: , {}", userId);
 		return repository.findById(userId);
