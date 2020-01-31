@@ -53,7 +53,7 @@ public class TrialsController {
 
 
     @PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
-    public String fetchMatchingTrials(@RequestBody TrialCondition condition, Long userId) throws JsonProcessingException {
+    public String fetchMatchingTrials(@RequestBody TrialCondition condition, Long id) throws JsonProcessingException {
         LOG.info("inside fetchMatchingTrials():: condition ->{}", condition);
         List<TrialsSummary> result = new ArrayList<>();
         if(StringUtils.isBlank(condition.getGender())){
@@ -75,12 +75,13 @@ public class TrialsController {
 
         //Code added to save the questions answered by user
         //We will get the value of userId from front end. currently we are hardcoding it as I have value for userId=16
-         userId =26L;
-        Optional<AccountProfile> account = accountProfileRepository.findById(userId);
+        id =26L;
+        Optional<AccountProfile> account = accountProfileRepository.findById(id);
         if(account != null) {
             condition.setAccount(account.get());
-            mapper.writeValueAsString(trialsConditionRepository.save(condition));
         }
+        TrialCondition trials = trialsConditionRepository.save(condition);
+        mapper.writeValueAsString(trialsConditionRepository.save(trials));
         return  mapper.writeValueAsString(result);
     }
 
@@ -90,9 +91,10 @@ public class TrialsController {
     }
 
 
-    @GetMapping(value = "/usersSavedTrials",  headers = "Accept=application/json")
+    @GetMapping(value = "/userList",  headers = "Accept=application/json")
     public String getAllUsersSavedTrials() throws JsonProcessingException {
         List<TrialCondition> condition = trialsConditionRepository.findAll();
+        LOG.info("trials :{}", condition);
         return mapper.writeValueAsString(condition);
     }
 
