@@ -1,9 +1,10 @@
 package au.com.optus.ctc.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -15,7 +16,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
@@ -46,52 +46,70 @@ public class TrialCondition {
     private AccountProfile account;
 
     @Column(name = "pmp")
+    @JsonProperty
     private String pmp;
 
     @Column(name = "age")
+    @JsonProperty
     private int age;
 
     @Column(name = "postCode")
+    @JsonProperty
     private String postCode;
 
     @Column(name = "gender")
+    @JsonProperty
     private String gender;
 
     @Column(name = "nodalStatus")
+    @JsonProperty
     private String nodalStatus;
 
     @Column(name = "spreadToOtherParts")
+    @JsonProperty
     private String spreadToOtherParts;
 
     @Column(name = "tumourSize")
+    @JsonProperty
     private String tumourSize;
 
     @Column(name = "ecog")
+    @JsonProperty
     private int ecog;
 
     @Column(name = "ER")
+    @JsonProperty
     private String ER;
 
     @Column(name = "PR")
+    @JsonProperty
     private String PR;
 
     @Column(name = "HER2")
+    @JsonProperty
     private String HER2;
 
     @Column(name = "nodeNumber")
+    @JsonProperty
     private String nodeNumber;
 
     @Column(name = "stage")
+    @JsonProperty
     private int stage;
 
     @Column(name = "BRCAMutation")
+    @JsonProperty
     private String BRCAMutation;
 
     @Column(name = "initialDiagnosis")
+    @JsonProperty
     private Date initialDiagnosis;
 
     @Column(name = "tumourType")
+    @JsonProperty
     private String tumourType;
+
+    private Long accountUserId;
 
     public Long getQuesId() {
         return quesId;
@@ -235,5 +253,9 @@ public class TrialCondition {
 
     public void setTumourType(String tumourType) {
         this.tumourType = tumourType;
+    }
+
+    public Long getAccountUserId() {
+        return accountUserId;
     }
 }

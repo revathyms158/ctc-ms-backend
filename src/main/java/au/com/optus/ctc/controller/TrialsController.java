@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static javafx.scene.input.KeyCode.L;
-
 /**
  * @author revathyms
  */
@@ -53,7 +51,7 @@ public class TrialsController {
 
 
     @PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
-    public String fetchMatchingTrials(@RequestBody TrialCondition condition, Long id) throws JsonProcessingException {
+    public String fetchMatchingTrials(@RequestBody TrialCondition condition) throws JsonProcessingException {
         LOG.info("inside fetchMatchingTrials():: condition ->{}", condition);
         List<TrialsSummary> result = new ArrayList<>();
         if(StringUtils.isBlank(condition.getGender())){
@@ -75,7 +73,7 @@ public class TrialsController {
 
         //Code added to save the questions answered by user
         //We will get the value of userId from front end. currently we are hardcoding it as I have value for userId=16
-        id =26L;
+        Long id = condition.getAccountUserId();
         Optional<AccountProfile> account = accountProfileRepository.findById(id);
         if(account != null) {
             condition.setAccount(account.get());
@@ -84,6 +82,17 @@ public class TrialsController {
         mapper.writeValueAsString(trialsConditionRepository.save(trials));
         return  mapper.writeValueAsString(result);
     }
+
+    /*@PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
+    public String fetchMatchingTrials(@RequestBody PostMembers members) throws JsonProcessingException {
+
+
+        TrialCondition condition = members.getConditions().get(0);
+        Long id = members.getId();
+        LOG.info("condition :{}", condition);
+        LOG.info("id :{}", id);
+        return  "Success";
+    }*/
 
     @GetMapping(value = "/savedTrials", headers = "Accept=application/json")
     public String fetchSavedTrials() throws JsonProcessingException {
