@@ -1,6 +1,5 @@
 package au.com.optus.ctc.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -37,9 +36,6 @@ public class TrialCondition {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "question_id")
     private Long quesId;
-
-    /*@OneToOne(mappedBy="condition")
-    private AccountProfile account;*/
 
     @OneToOne
     @JoinColumn(name="account_id")

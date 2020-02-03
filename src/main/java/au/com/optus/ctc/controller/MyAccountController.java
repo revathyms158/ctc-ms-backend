@@ -1,8 +1,11 @@
 package au.com.optus.ctc.controller;
 
-import java.util.Optional;
-import java.util.UUID;
-
+import au.com.optus.ctc.dao.AccountProfileRepository;
+import au.com.optus.ctc.model.AccountProfile;
+import au.com.optus.ctc.model.AccountProfileResponse;
+import au.com.optus.ctc.service.MyAccountServiceIF;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import au.com.optus.ctc.dao.AccountProfileRepository;
-import au.com.optus.ctc.model.AccountProfile;
-import au.com.optus.ctc.model.AccountProfileResponse;
-import au.com.optus.ctc.service.MyAccountServiceIF;
+import java.util.Optional;
 
 @CrossOrigin(origins = { "http://172.31.5.10:4200" })
 @RestController

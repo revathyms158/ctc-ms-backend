@@ -1,10 +1,9 @@
 package au.com.optus.ctc.controller;
 
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
+import au.com.optus.ctc.model.AccountProfile;
 import au.com.optus.ctc.model.GenderEnum;
+import au.com.optus.ctc.service.MyAccountServiceIF;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,12 +16,11 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
-import au.com.optus.ctc.model.AccountProfile;
-import au.com.optus.ctc.service.MyAccountServiceIF;
-
 import java.util.Date;
+
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 /**
@@ -53,7 +51,7 @@ public class MyAccountControllerTest {
 		profile.setAge(45);
 		profile.setGender(GenderEnum.F);
         profile.setDob(new Date(12/12/1984));
-		profile.setEmailAddress("email776@mail.com");
+		profile.setEmailAddress("email768976@mail.com");
 		profile.setPostCode("2113");
 		String json = mapper.writeValueAsString(profile);
 		mvc.perform(post("http://localhost:9090/api/ctc/myaccount/createAccountProfile").content(json)

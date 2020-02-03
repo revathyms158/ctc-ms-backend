@@ -3,7 +3,6 @@ package au.com.optus.ctc.controller;
 import au.com.optus.ctc.dao.TrialsSummaryRepository;
 import au.com.optus.ctc.service.TrialFilterServiceIF;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

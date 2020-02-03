@@ -19,13 +19,9 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * @author revathyms
@@ -56,12 +52,6 @@ public class AccountProfile {
 		this.id = id;
 	}
 
-    /*@OneToOne
-    @JoinColumn(name="ques_id", referencedColumnName = "question_id")
-    private TrialCondition condition;*/
-
-    /*@OneToOne(mappedBy="account")
-    private TrialCondition condition;*/
 
 	@NonNull
 	@Column(name = "first_name")
@@ -84,22 +74,13 @@ public class AccountProfile {
 	@JsonProperty
 	private GenderEnum gender;
 
-	/*
-	 * @NonNull
-	 * 
-	 * @Column(name = "role") private String role;
-	 */
 
 	@NonNull
 	@Column(name = "dob")
 	@JsonProperty
 	private Date dob;
 
-	/*
-	 * @NonNull
-	 * 
-	 * @Column(name = "contact_number") private String contactNumber;
-	 */
+
 	@NonNull
 	@Column(name = "email", unique = true)
 	@JsonProperty

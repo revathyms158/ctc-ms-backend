@@ -1,12 +1,10 @@
 package au.com.optus.ctc.dao;
 
+import au.com.optus.ctc.model.AccountProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
-
-import au.com.optus.ctc.model.AccountProfile;
-import au.com.optus.ctc.model.TrialsSummary;
 
 @Component
 public class MyAccountFilterSpecification {
