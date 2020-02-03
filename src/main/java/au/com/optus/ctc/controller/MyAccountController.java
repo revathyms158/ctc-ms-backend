@@ -67,15 +67,6 @@ public class MyAccountController {
 	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
 			throws JsonProcessingException {
 		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
-		/*
-		 * if (profile != null) { LOG.info("accountProfile, {}",
-		 * profile.toString()); if
-		 * (filterService.findEmail(profile.getEmailAddress()) == 0) {
-		 * profile.setId(UUID.randomUUID().toString());
-		 * mapper.writeValueAsString(repository.save(profile)); }
-		 *
-		 * }
-		 */
     	AccountProfile user = repository.save(profile);
 		mapper.writeValueAsString(user);
 		LOG.info("ID generated for Profile _____________, {}", user.getId());

@@ -71,8 +71,6 @@ public class TrialsController {
         }
         LOG.info("result :{}", result);
 
-        //Code added to save the questions answered by user
-        //We will get the value of userId from front end. currently we are hardcoding it as I have value for userId=16
         Long id = condition.getAccountUserId();
         Optional<AccountProfile> account = accountProfileRepository.findById(id);
         if(account != null) {
@@ -83,16 +81,6 @@ public class TrialsController {
         return  mapper.writeValueAsString(result);
     }
 
-    /*@PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
-    public String fetchMatchingTrials(@RequestBody PostMembers members) throws JsonProcessingException {
-
-
-        TrialCondition condition = members.getConditions().get(0);
-        Long id = members.getId();
-        LOG.info("condition :{}", condition);
-        LOG.info("id :{}", id);
-        return  "Success";
-    }*/
 
     @GetMapping(value = "/savedTrials", headers = "Accept=application/json")
     public String fetchSavedTrials() throws JsonProcessingException {
