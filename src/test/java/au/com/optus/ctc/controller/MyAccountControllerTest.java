@@ -45,8 +45,16 @@ public class MyAccountControllerTest {
 	@Test
 	@Ignore
 	public void testCreateAccountProfile_success() throws Exception {
-		AccountProfile profile = new AccountProfile("firstName4", "lastname", 45, GenderEnum.F,
-				new Date(12 / 12 / 1984), "email4@mail.com", "2113");
+		/*AccountProfile profile = new AccountProfile("firstName4", "lastname", 45, GenderEnum.F,
+				new Date(12 / 12 / 1984), "email4@mail.com", "2113");*/
+		AccountProfile profile = new AccountProfile();
+		profile.setFirstName("firstName4");
+		profile.setLastName("lastname");
+		profile.setAge(45);
+		profile.setGender(GenderEnum.F);
+        profile.setDob(new Date(12/12/1984));
+		profile.setEmailAddress("email776@mail.com");
+		profile.setPostCode("2113");
 		String json = mapper.writeValueAsString(profile);
 		mvc.perform(post("http://localhost:9090/api/ctc/myaccount/createAccountProfile").content(json)
 				.accept(MediaType.APPLICATION_JSON).with(csrf()).contentType(MediaType.APPLICATION_JSON)
