@@ -15,9 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -79,8 +81,9 @@ public class TrialsController {
                 condition.setAccount(account.get());
             }
         }
-        
+
         TrialCondition trials = trialsConditionRepository.save(condition);
+        LOG.info("trial conditions :{}", trials);
         mapper.writeValueAsString(trialsConditionRepository.save(trials));
         return  mapper.writeValueAsString(result);
     }
@@ -100,10 +103,31 @@ public class TrialsController {
     }
 
 
-    @PostMapping(value = "/removeTrials", headers = "Accept=application/json")
-    public String fetchRemovedTrials(/*@RequestBody AccountProfile profile*/)  {
+    @PostMapping(value = "/removeUser/{quesId}", headers = "Accept=application/json")
+    public String fetchRemovedTrials(@PathVariable final Long quesId)  {
 
-        return  null;
+        Optional<TrialCondition> condition = trialsConditionRepository.findById(quesId);
+        if(condition!=null) {
+            Long id = condition.get().getAccountUserId();
+            Optional<AccountProfile> account = accountProfileRepository.findById(id);
+            trialsConditionRepository.deleteById(quesId);
+            accountProfileRepository.deleteById(id);
+        }
+        return "Trial is deleted";
     }
 
+
+
+
+   /* public void deleteEmployeeById(Long id) throws RecordNotFoundException
+    {
+        Optional<EmployeeEntity> employee = repository.findById(id);
+
+        if(employee.isPresent())
+        {
+            repository.deleteById(id);
+        } else {
+            throw new RecordNotFoundException("No employee record exist for given id");
+        }
+    }*/
 }
