@@ -71,11 +71,15 @@ public class TrialsController {
         }
         LOG.info("result :{}", result);
 
-        Long id = condition.getAccountUserId();
-        Optional<AccountProfile> account = accountProfileRepository.findById(id);
-        if(account != null) {
-            condition.setAccount(account.get());
+        if(condition !=null && condition.getAccountUserId()!= null){
+            Long id = condition.getAccountUserId();
+            Optional<AccountProfile> account = accountProfileRepository.findById(id);
+
+            if(account != null) {
+                condition.setAccount(account.get());
+            }
         }
+        
         TrialCondition trials = trialsConditionRepository.save(condition);
         mapper.writeValueAsString(trialsConditionRepository.save(trials));
         return  mapper.writeValueAsString(result);
