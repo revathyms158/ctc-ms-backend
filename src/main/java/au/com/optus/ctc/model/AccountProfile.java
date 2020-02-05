@@ -52,6 +52,10 @@ public class AccountProfile {
 		this.id = id;
 	}
 
+    @NonNull
+    @Column(name = "password")
+    @JsonProperty
+    private String password;
 
 	@NonNull
 	@Column(name = "first_name")
