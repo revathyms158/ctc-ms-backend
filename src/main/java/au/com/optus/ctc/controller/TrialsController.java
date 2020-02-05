@@ -107,9 +107,8 @@ public class TrialsController {
     public String fetchRemovedTrials(@PathVariable final Long quesId)  {
 
         Optional<TrialCondition> condition = trialsConditionRepository.findById(quesId);
-        if(condition!=null) {
+        if(condition!=null && condition.get().getAccountUserId()!= null) {
             Long id = condition.get().getAccountUserId();
-            Optional<AccountProfile> account = accountProfileRepository.findById(id);
             trialsConditionRepository.deleteById(quesId);
             accountProfileRepository.deleteById(id);
         }
