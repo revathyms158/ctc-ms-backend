@@ -43,14 +43,10 @@ public class AccountProfile {
     @Column(name = "id_users")
 	private Long id;
 
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @NonNull
+    @Column(name = "email", unique = true)
+    @JsonProperty
+    private String emailAddress;
 
     @NonNull
     @Column(name = "password")
@@ -83,12 +79,6 @@ public class AccountProfile {
 	@Column(name = "dob")
 	@JsonProperty
 	private Date dob;
-
-
-	@NonNull
-	@Column(name = "email", unique = true)
-	@JsonProperty
-	private String emailAddress;
 
 	@NonNull
 	@Column(name = "address")
