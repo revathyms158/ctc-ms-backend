@@ -4,12 +4,14 @@ import au.com.optus.ctc.dao.AccountProfileRepository;
 import au.com.optus.ctc.model.AccountProfile;
 import au.com.optus.ctc.model.AccountProfileResponse;
 import au.com.optus.ctc.service.MyAccountServiceIF;
+import au.com.optus.ctc.util.UtilFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +34,12 @@ public class MyAccountController {
 
 	@Autowired
 	AccountProfileRepository repository;
+
+	@Autowired
+	private PasswordEncoder bcryptEncoder;
+
+	@Autowired
+	private UtilFacade utilFacade;
 
 	@Autowired(required = false)
 	MyAccountServiceIF filterService;
@@ -64,6 +72,16 @@ public class MyAccountController {
 	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
 			throws JsonProcessingException {
 		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
+
+		if(profile != null && profile.getPassword() != null) {
+			profile.setPassword(bcryptEncoder.encode(profile.getPassword()));
+		}
+
+		if(profile != null && profile.getDob() != null) {
+			int age = utilFacade.calculateAge(profile.getDob());
+			profile.setAge(age);
+		}
+
     	AccountProfile user = repository.save(profile);
 		mapper.writeValueAsString(user);
 		LOG.info("ID generated for Profile _____________, {}", user.getId());
@@ -80,4 +98,9 @@ public class MyAccountController {
 
 	}
 
+
+	@RequestMapping({"/hello"})
+    public String firstPage() {
+		return "Hello World";
+	}
 }

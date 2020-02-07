@@ -33,15 +33,15 @@ import java.util.Date;
 @Entity
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
 public class AccountProfile {
-	public AccountProfile() {
-		// TODO Auto-generated constructor stub
-	}
+    public AccountProfile() {
+      // TODO Auto-generated constructor stub
+    }
 
     @Setter(AccessLevel.PROTECTED)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_users")
-	private Long id;
+    private Long id;
 
     @NonNull
     @Column(name = "email", unique = true)
@@ -53,55 +53,72 @@ public class AccountProfile {
     @JsonProperty
     private String password;
 
-	@NonNull
-	@Column(name = "first_name")
-	@JsonProperty
-	private String firstName;
+    @NonNull
+    @Column(name = "first_name")
+    @JsonProperty
+    private String firstName;
 
-	@NonNull
-	@Column(name = "last_name")
-	@JsonProperty
-	private String lastName;
+    @NonNull
+    @Column(name = "last_name")
+    @JsonProperty
+    private String lastName;
 
-	@NonNull
-	@Column(name = "age")
-	@JsonProperty
-	private int age;
+    @NonNull
+    @Column(name = "age")
+    @JsonProperty
+    private int age;
 
-	@NonNull
-	@Enumerated(EnumType.STRING)
-	@Column(name = "gender")
-	@JsonProperty
-	private GenderEnum gender;
+    @NonNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gender")
+    @JsonProperty
+    private GenderEnum gender;
 
 
-	@NonNull
-	@Column(name = "dob")
-	@JsonProperty
-	private Date dob;
+    @NonNull
+    @Column(name = "dob")
+    @JsonProperty
+    private Date dob;
 
-	@NonNull
-	@Column(name = "address")
-	@JsonProperty
-	private String postCode;
+    @NonNull
+    @Column(name = "address")
+    @JsonProperty
+    private String postCode;
 
-	@Column(name = "created_on", nullable = false, updatable = false)
-	// @Temporal(TemporalType.TIMESTAMP)
-	@Setter(AccessLevel.PROTECTED)
-	@CreatedDate
-	private Date createdOn;
+    @Column(name = "created_on", nullable = false, updatable = false)
+// @Temporal(TemporalType.TIMESTAMP)
+    @Setter(AccessLevel.PROTECTED)
+    @CreatedDate
+    private Date createdOn;
 
-	@Column(name = "updated_on", nullable = false)
-	// @Temporal(TemporalType.TIMESTAMP)
-	@Setter(AccessLevel.PROTECTED)
-	@LastModifiedDate
-	private Date updatedOn;
+    @Column(name = "updated_on", nullable = false)
+// @Temporal(TemporalType.TIMESTAMP)
+    @Setter(AccessLevel.PROTECTED)
+    @LastModifiedDate
+    private Date updatedOn;
 
-	
-	@Override
-	public String toString() {
-		return "AccountProfile [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age
-				+ ", gender=" + gender + ", dob=" + dob + ", emailAddress=" + emailAddress + ", postCode=" + postCode
-				+ ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + "]";
-	}
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Date getDob() {
+        return dob;
+    }
+
+    public void setDob(Date dob) {
+        this.dob = dob;
+    }
+
+
+    @Override
+    public String toString() {
+        return "AccountProfile [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age
+                + ", gender=" + gender + ", dob=" + dob + ", emailAddress=" + emailAddress + ", postCode=" + postCode
+                + ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + "]";
+    }
 }

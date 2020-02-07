@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import au.com.optus.ctc.model.AccountProfile;
 @Configuration
 public interface AccountProfileRepository extends JpaRepository<AccountProfile, Long> {
-
+    AccountProfile findByEmailAddress(String username);
 }
