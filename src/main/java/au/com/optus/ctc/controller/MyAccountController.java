@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 @CrossOrigin(origins = { "http://172.31.5.10:4200" })
@@ -73,6 +75,7 @@ public class MyAccountController {
 			throws JsonProcessingException {
 		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
 
+		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
 		if(profile != null && profile.getPassword() != null) {
 			profile.setPassword(bcryptEncoder.encode(profile.getPassword()));
 		}
@@ -82,11 +85,17 @@ public class MyAccountController {
 			profile.setAge(age);
 		}
 
-    	AccountProfile user = repository.save(profile);
-		mapper.writeValueAsString(user);
-		LOG.info("ID generated for Profile _____________, {}", user.getId());
-		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
-		accountProfileResponse.setId(user.getId());
+    	try{
+			AccountProfile user = repository.save(profile);
+			mapper.writeValueAsString(user);
+			LOG.info("ID generated for Profile _____________, {}", user.getId());
+			accountProfileResponse.setId(user.getId());
+		} catch (Exception ex) {
+			if(ex.getMessage().startsWith("could not")) {
+				accountProfileResponse.setErrorMessage("Duplicate entry for user");
+			}
+		}
+
 		return accountProfileResponse;
 	}
 

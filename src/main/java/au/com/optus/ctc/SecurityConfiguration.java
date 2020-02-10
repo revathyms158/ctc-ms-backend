@@ -1,3 +1,4 @@
+/*
 package au.com.optus.ctc;
 
 import org.springframework.context.annotation.Configuration;
@@ -37,3 +38,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		}
 
 }
+*/

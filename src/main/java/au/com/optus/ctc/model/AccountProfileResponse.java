@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class AccountProfileResponse {
 	@JsonProperty
 	private Long id;
+	@JsonProperty
+	private String errorMessage;
 
 	public Long getId() {
 		return id;
@@ -14,4 +16,11 @@ public class AccountProfileResponse {
 		this.id = id;
 	}
 
+	public String getErrorMessage() {
+		return errorMessage;
+	}
+
+	public void setErrorMessage(String errorMessage) {
+		this.errorMessage = errorMessage;
+	}
 }
