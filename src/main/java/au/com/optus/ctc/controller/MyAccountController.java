@@ -3,6 +3,7 @@ package au.com.optus.ctc.controller;
 import au.com.optus.ctc.dao.AccountProfileRepository;
 import au.com.optus.ctc.model.AccountProfile;
 import au.com.optus.ctc.model.AccountProfileResponse;
+import au.com.optus.ctc.model.TrialCondition;
 import au.com.optus.ctc.service.MyAccountServiceIF;
 import au.com.optus.ctc.util.UtilFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -14,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.List;
 import java.util.Optional;
 
 @CrossOrigin(origins = { "http://172.31.5.10:4200" })
@@ -99,17 +102,16 @@ public class MyAccountController {
 		return accountProfileResponse;
 	}
 
-	@RequestMapping(value = "/myaccount/getAccountProfile/{userId}", method = RequestMethod.GET)
-	public Optional<AccountProfile> getAccountProfile(@PathVariable final Long userId)
+	@PostMapping(value = "/getAccountDetails", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
+	public String getAccountProfile(@RequestBody String emailAddress)
 			throws JsonProcessingException {
-		LOG.info(" Get accountProfile  ____________ for  ID: , {}", userId);
-		return repository.findById(userId);
+		LOG.info(" Get accountProfile  ____________ by  Emailaddress: , {}", emailAddress);
+
+		AccountProfile profile = repository.findByEmailAddress(emailAddress);
+		LOG.info("profile :{}", profile);
+		return mapper.writeValueAsString(profile);
 
 	}
 
-
-	@RequestMapping({"/hello"})
-    public String firstPage() {
-		return "Hello World";
-	}
 }
