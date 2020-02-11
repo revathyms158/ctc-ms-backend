@@ -89,12 +89,6 @@ public class TrialsController {
     }
 
 
-    @GetMapping(value = "/savedTrials", headers = "Accept=application/json")
-    public String fetchSavedTrials() throws JsonProcessingException {
-        return mapper.writeValueAsString(trialsConditionRepository.findAll());
-    }
-
-
     @GetMapping(value = "/userList",  headers = "Accept=application/json")
     public String getAllUsersSavedTrials() throws JsonProcessingException {
         List<TrialCondition> condition = trialsConditionRepository.findAll();
@@ -105,7 +99,6 @@ public class TrialsController {
 
     @PostMapping(value = "/removeUser/{quesId}", headers = "Accept=application/json")
     public String fetchRemovedTrials(@PathVariable final Long quesId)  {
-
         Optional<TrialCondition> condition = trialsConditionRepository.findById(quesId);
         if(condition!=null && condition.get().getAccountUserId()!= null) {
             Long id = condition.get().getAccountUserId();
@@ -115,18 +108,4 @@ public class TrialsController {
         return "Trial is deleted";
     }
 
-
-
-
-   /* public void deleteEmployeeById(Long id) throws RecordNotFoundException
-    {
-        Optional<EmployeeEntity> employee = repository.findById(id);
-
-        if(employee.isPresent())
-        {
-            repository.deleteById(id);
-        } else {
-            throw new RecordNotFoundException("No employee record exist for given id");
-        }
-    }*/
 }
