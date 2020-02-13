@@ -89,6 +89,7 @@ public class MyAccountController {
 		}
 
     	try{
+
 			AccountProfile user = repository.save(profile);
 			mapper.writeValueAsString(user);
 			LOG.info("ID generated for Profile _____________, {}", user.getId());
@@ -114,4 +115,14 @@ public class MyAccountController {
 
 	}
 
+    @PostMapping(value = "/addAdminUser", consumes = { MediaType.APPLICATION_JSON_VALUE,
+            MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
+    public String addadminUserByAdmin(@RequestBody AccountProfile profile) throws JsonProcessingException{
+        if(profile != null && profile.getPassword() != null) {
+            profile.setPassword(bcryptEncoder.encode(profile.getPassword()));
+        }
+        AccountProfile user = repository.save(profile);
+        mapper.writeValueAsString(user);
+        return "Admin User added successfully";
+    }
 }

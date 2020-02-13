@@ -11,17 +11,23 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * @author revathyms
@@ -53,37 +59,41 @@ public class AccountProfile {
     @JsonProperty
     private String password;
 
-    @NonNull
+
     @Column(name = "first_name")
     @JsonProperty
     private String firstName;
 
-    @NonNull
+
     @Column(name = "last_name")
     @JsonProperty
     private String lastName;
 
-    @NonNull
+
     @Column(name = "age")
     @JsonProperty
     private int age;
 
-    @NonNull
+
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     @JsonProperty
     private GenderEnum gender;
 
 
-    @NonNull
+
     @Column(name = "dob")
     @JsonProperty
     private Date dob;
 
-    @NonNull
+
     @Column(name = "address")
     @JsonProperty
     private String postCode;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+    @JoinTable(name = "user_role", joinColumns  =@JoinColumn(name="id"),inverseJoinColumns = @JoinColumn(name="role_id"))
+    private Set<Role> roles;
 
     @Column(name = "created_on", nullable = false, updatable = false)
 // @Temporal(TemporalType.TIMESTAMP)
@@ -98,12 +108,44 @@ public class AccountProfile {
     private Date updatedOn;
 
 
+    public String getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(String emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
     public int getAge() {
         return age;
     }
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public GenderEnum getGender() {
+        return gender;
+    }
+
+    public void setGender(GenderEnum gender) {
+        this.gender = gender;
     }
 
     public Date getDob() {
@@ -114,6 +156,21 @@ public class AccountProfile {
         this.dob = dob;
     }
 
+    public String getPostCode() {
+        return postCode;
+    }
+
+    public void setPostCode(String postCode) {
+        this.postCode = postCode;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
 
     @Override
     public String toString() {
