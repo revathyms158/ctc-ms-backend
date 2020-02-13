@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -36,6 +37,8 @@ import java.util.Set;
 @RequiredArgsConstructor
 @JsonIgnoreProperties(value = { "id", "createdOn", "updatedOn" }, allowGetters = true)
 @EntityListeners(AuditingEntityListener.class)
+@Getter
+@Setter
 @Entity
 @Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = { "email" }) })
 public class AccountProfile {
@@ -170,6 +173,15 @@ public class AccountProfile {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

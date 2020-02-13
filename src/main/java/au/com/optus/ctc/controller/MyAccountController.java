@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -115,6 +116,7 @@ public class MyAccountController {
 
 	}
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping(value = "/addAdminUser", consumes = { MediaType.APPLICATION_JSON_VALUE,
             MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
     public String addadminUserByAdmin(@RequestBody AccountProfile profile) throws JsonProcessingException{
