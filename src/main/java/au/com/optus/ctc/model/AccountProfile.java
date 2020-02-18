@@ -96,6 +96,7 @@ public class AccountProfile {
 
     @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns  =@JoinColumn(name="id"),inverseJoinColumns = @JoinColumn(name="role_id"))
+    @JsonProperty
     private Set<Role> roles;
 
     @Column(name = "created_on", nullable = false, updatable = false)

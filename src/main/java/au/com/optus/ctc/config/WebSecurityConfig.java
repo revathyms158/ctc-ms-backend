@@ -21,6 +21,8 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collections;
 
+import static org.springframework.security.authorization.AuthenticatedReactiveAuthorizationManager.authenticated;
+
 /**
  * Created by optus on 6/2/20.
  */
@@ -56,13 +58,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    /*@Override
+    @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeRequests().antMatchers("/api/ctc/authenticate", "/api/ctc/myaccount/createAccountProfile").permitAll().
 
-        anyRequest().authenticated().and().
-
+        anyRequest().authenticated()./*and().
+        authorizeRequests().antMatchers("/api/ctc/trials/userList", "/api/ctc/addAdminUser").authenticated().anyRequest().hasAnyRole("ADMIN").and().
+                formLogin().permitAll().*/and().
         exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
@@ -80,15 +83,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 return config;
             }
         });
-    }*/
+    }
 
-    @Override
+  /*  @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity.authorizeRequests().antMatchers("/api/ctc/authenticate", "/api/ctc/myaccount/createAccountProfile")
-                .authenticated().anyRequest().permitAll().and().
+                .authenticated().anyRequest().permitAll()*//*.and().
                 authorizeRequests().antMatchers("/api/ctc/trials/userList", "/api/ctc/addAdminUser").authenticated().anyRequest().hasAnyRole("ADMIN").and().
-                formLogin().permitAll().and().
+                formLogin().permitAll()*//*.and().
                 exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -105,7 +108,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 return config;
             }
         });
-    }
+    }*/
 
 
 }

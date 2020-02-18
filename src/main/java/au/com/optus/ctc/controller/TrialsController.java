@@ -90,7 +90,7 @@ public class TrialsController {
     }
 
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    //@PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(value = "/userList",  headers = "Accept=application/json")
     public String getAllUsersSavedTrials() throws JsonProcessingException {
         List<TrialCondition> condition = trialsConditionRepository.findAll();
