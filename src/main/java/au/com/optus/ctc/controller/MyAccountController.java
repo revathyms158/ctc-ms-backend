@@ -123,11 +123,7 @@ public class MyAccountController {
         if(profile != null && profile.getPassword() != null) {
             profile.setPassword(bcryptEncoder.encode(profile.getPassword()));
         }
-
-
         AccountProfile user = repository.save(profile);
-        mapper.writeValueAsString(user);
-        return "Admin User added successfully";
+        return  mapper.writeValueAsString("Admin user added successfully");
     }
-
 }

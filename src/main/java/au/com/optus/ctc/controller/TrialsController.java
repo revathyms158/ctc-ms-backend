@@ -85,12 +85,11 @@ public class TrialsController {
 
         TrialCondition trials = trialsConditionRepository.save(condition);
         LOG.info("trial conditions :{}", trials);
-        mapper.writeValueAsString(trialsConditionRepository.save(trials));
+        //mapper.writeValueAsString(trialsConditionRepository.save(trials));
         return  mapper.writeValueAsString(result);
     }
 
 
-    //@PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(value = "/userList",  headers = "Accept=application/json")
     public String getAllUsersSavedTrials() throws JsonProcessingException {
         List<TrialCondition> condition = trialsConditionRepository.findAll();
