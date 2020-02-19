@@ -77,7 +77,8 @@ public class TrialsController {
         if(condition !=null && condition.getAccountUserId()!= null){
             Long id = condition.getAccountUserId();
             Optional<AccountProfile> account = accountProfileRepository.findById(id);
-
+            LOG.info("Trial account details :{}", account);
+            System.out.println(account);
             if(account != null) {
                 condition.setAccount(account.get());
             }
@@ -85,7 +86,6 @@ public class TrialsController {
 
         TrialCondition trials = trialsConditionRepository.save(condition);
         LOG.info("trial conditions :{}", trials);
-        //mapper.writeValueAsString(trialsConditionRepository.save(trials));
         return  mapper.writeValueAsString(result);
     }
 
