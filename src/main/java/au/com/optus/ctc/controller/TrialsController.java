@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,6 +32,7 @@ import java.util.Optional;
  * @author revathyms
  */
 
+@CrossOrigin(origins = { "http://172.31.5.10:4200" })
 @RestController
 @RequestMapping(value = "/api/ctc/trials")
 public class TrialsController {
@@ -51,6 +53,9 @@ public class TrialsController {
 
     @Autowired
     AccountProfileRepository accountProfileRepository;
+
+    @Autowired
+    TrialsSummaryRepository trialsSummaryRepository;
 
 
     @PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
@@ -86,6 +91,10 @@ public class TrialsController {
 
         TrialCondition trials = trialsConditionRepository.save(condition);
         LOG.info("trial conditions :{}", trials);
+
+        if(result !=null && !result.isEmpty()) {
+          List<TrialsSummary> trialsSummaries = trialsSummaryRepository.saveAll(result);
+        }
         return  mapper.writeValueAsString(result);
     }
 
@@ -107,6 +116,13 @@ public class TrialsController {
             accountProfileRepository.deleteById(id);
         }
         return "Trial is deleted";
+    }
+
+    @GetMapping(value = "/trialsSummary",  headers = "Accept=application/json")
+    public String getAllUsersSavedTrialSummary() throws JsonProcessingException {
+        List<TrialsSummary> summaries = trialsSummaryRepository.findAll();
+        LOG.info("trial summary :{}", summaries);
+        return mapper.writeValueAsString(summaries);
     }
 
 }
