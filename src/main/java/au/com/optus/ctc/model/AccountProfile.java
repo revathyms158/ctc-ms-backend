@@ -29,6 +29,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -104,6 +105,11 @@ public class AccountProfile {
     @JoinColumn(name="account_ques_id")
     private TrialCondition condition;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+    @JoinTable(name = "user_summary", joinColumns  =@JoinColumn(name="id_users"),inverseJoinColumns = @JoinColumn(name="id_trials_summary"))
+    @JsonProperty
+    private List<TrialsSummary> summaries;
+
 
     @Column(name = "created_on", nullable = false, updatable = false)
 // @Temporal(TemporalType.TIMESTAMP)
@@ -123,6 +129,14 @@ public class AccountProfile {
 
     public void setCondition(TrialCondition condition) {
         this.condition = condition;
+    }
+
+    public List<TrialsSummary> getSummaries() {
+        return summaries;
+    }
+
+    public void setSummaries(List<TrialsSummary> summaries) {
+        this.summaries = summaries;
     }
 
 /*public String getEmailAddress() {

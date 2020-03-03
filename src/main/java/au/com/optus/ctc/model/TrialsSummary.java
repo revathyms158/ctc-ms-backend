@@ -40,7 +40,7 @@ public class TrialsSummary {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id_trials_summary")
-    private Long id;
+    private Long id_trials_summary;
 
     @NonNull
     @Column(name = "stage")

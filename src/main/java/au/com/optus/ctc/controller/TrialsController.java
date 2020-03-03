@@ -125,25 +125,26 @@ public class TrialsController {
         TrialCondition trials = trialsConditionRepository.save(condition);
         LOG.info("trial conditions :{}", trials);
 
+        List<TrialsSummary> trialsSummaries = null;
+        if(result !=null && !result.isEmpty()) {
+            trialsSummaries  = trialsSummaryRepository.saveAll(result);
+        }
+
         AccountProfile account = null;
         if(condition !=null && condition.getAccountUserId()!= null){
             Long id = condition.getAccountUserId();
             account = accountProfileRepository.findById(id).get();
             if(account != null) {
                 account.setCondition(trials);
-                AccountProfile newaccount = accountProfileRepository.save(account);
-                LOG.info("account with trial details :{}", newaccount);
-                if(newaccount.getCondition()!=null) {
-                    LOG.info("account with trial details :{}", newaccount.getCondition());
-                }
+                account.setSummaries(trialsSummaries);
+                account = accountProfileRepository.save(account);
+                LOG.info("account with trial details :{}", account);
             }
         }
-        if(result !=null && !result.isEmpty()) {
-            List<TrialsSummary> trialsSummaries = trialsSummaryRepository.saveAll(result);
-        }
+
         return  mapper.writeValueAsString(result);
     }
-    
+
 
     @GetMapping(value = "/userList",  headers = "Accept=application/json")
     public String getAllUsersSavedTrials() throws JsonProcessingException {
@@ -152,7 +153,20 @@ public class TrialsController {
         return mapper.writeValueAsString(accounts);
     }
 
+    @PostMapping(value = "/userSpecificTrials/{userID}", headers = "Accept=application/json")
+    public String fetchUserSpecificTrialConditions(@PathVariable final Long userID)  throws JsonProcessingException {
+        AccountProfile account = accountProfileRepository.findById(userID).get();
+        return mapper.writeValueAsString(account);
+    }
 
+
+    /*@PostMapping(value = "/userSpecificTrialSummary/{userID}", headers = "Accept=application/json")
+    public String fetchUserSpecificTrialSummary(@PathVariable final Long userID)  throws JsonProcessingException {
+        AccountProfile account = accountProfileRepository.findById(userID).get();
+        return mapper.writeValueAsString(account);
+    }
+
+*/
     @PostMapping(value = "/removeUser/{quesId}", headers = "Accept=application/json")
     public String fetchRemovedTrials(@PathVariable final Long quesId)  {
         Optional<TrialCondition> condition = trialsConditionRepository.findById(quesId);
