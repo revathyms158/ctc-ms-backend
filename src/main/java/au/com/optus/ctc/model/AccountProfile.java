@@ -25,6 +25,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import java.util.Date;
@@ -99,6 +100,11 @@ public class AccountProfile {
     @JsonProperty
     private Set<Role> roles;
 
+    @OneToOne(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+    @JoinColumn(name="account_ques_id")
+    private TrialCondition condition;
+
+
     @Column(name = "created_on", nullable = false, updatable = false)
 // @Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.PROTECTED)
@@ -111,8 +117,15 @@ public class AccountProfile {
     @LastModifiedDate
     private Date updatedOn;
 
+    public TrialCondition getCondition() {
+        return condition;
+    }
 
-    public String getEmailAddress() {
+    public void setCondition(TrialCondition condition) {
+        this.condition = condition;
+    }
+
+/*public String getEmailAddress() {
         return emailAddress;
     }
 
@@ -183,7 +196,7 @@ public class AccountProfile {
 
     public void setPassword(String password) {
         this.password = password;
-    }
+    }*/
 
     @Override
     public String toString() {

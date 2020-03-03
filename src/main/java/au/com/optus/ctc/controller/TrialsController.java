@@ -58,7 +58,7 @@ public class TrialsController {
     TrialsSummaryRepository trialsSummaryRepository;
 
 
-    @PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
+    /*@PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
     public String fetchMatchingTrials(@RequestBody TrialCondition condition) throws JsonProcessingException {
         LOG.info("inside fetchMatchingTrials():: condition ->{}", condition);
         List<TrialsSummary> result = new ArrayList<>();
@@ -96,14 +96,60 @@ public class TrialsController {
           List<TrialsSummary> trialsSummaries = trialsSummaryRepository.saveAll(result);
         }
         return  mapper.writeValueAsString(result);
-    }
+    }*/
 
+
+
+
+    @PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
+    public String fetchMatchingTrials(@RequestBody TrialCondition condition) throws JsonProcessingException {
+        LOG.info("inside fetchMatchingTrials():: condition ->{}", condition);
+        List<TrialsSummary> result = new ArrayList<>();
+        if(StringUtils.isBlank(condition.getGender())){
+            condition.setGender(GenderEnum.NA.value());
+        }
+        if(StringUtils.isBlank(condition.getTumourSize())){
+            condition.setTumourSize("Any");
+        }
+        if(StringUtils.isBlank(condition.getNodeNumber())){
+            condition.setNodeNumber("0");
+        }
+        if (StringUtils.isBlank(condition.getSpreadToOtherParts()) || StringUtils.equalsIgnoreCase(condition.getSpreadToOtherParts(),"Y/N")) {
+            condition.setSpreadToOtherParts("N");
+            result = filterService.getMatchingTrials(condition);
+        } else {
+            result = filterService.getMatchingTrials(condition);
+        }
+        LOG.info("result :{}", result);
+
+        TrialCondition trials = trialsConditionRepository.save(condition);
+        LOG.info("trial conditions :{}", trials);
+
+        AccountProfile account = null;
+        if(condition !=null && condition.getAccountUserId()!= null){
+            Long id = condition.getAccountUserId();
+            account = accountProfileRepository.findById(id).get();
+            if(account != null) {
+                account.setCondition(trials);
+                AccountProfile newaccount = accountProfileRepository.save(account);
+                LOG.info("account with trial details :{}", newaccount);
+                if(newaccount.getCondition()!=null) {
+                    LOG.info("account with trial details :{}", newaccount.getCondition());
+                }
+            }
+        }
+        if(result !=null && !result.isEmpty()) {
+            List<TrialsSummary> trialsSummaries = trialsSummaryRepository.saveAll(result);
+        }
+        return  mapper.writeValueAsString(result);
+    }
+    
 
     @GetMapping(value = "/userList",  headers = "Accept=application/json")
     public String getAllUsersSavedTrials() throws JsonProcessingException {
-        List<TrialCondition> condition = trialsConditionRepository.findAll();
-        LOG.info("trials :{}", condition);
-        return mapper.writeValueAsString(condition);
+        List<AccountProfile> accounts = accountProfileRepository.findAll();
+        LOG.info("Account with conditions :{}", accounts);
+        return mapper.writeValueAsString(accounts);
     }
 
 

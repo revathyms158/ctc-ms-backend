@@ -88,11 +88,12 @@ public class MyAccountController {
 			int age = utilFacade.calculateAge(profile.getDob());
 			profile.setAge(age);
 		}
+            profile.setCondition(null);
 
     	try{
-
 			AccountProfile user = repository.save(profile);
 			mapper.writeValueAsString(user);
+            LOG.info("Account creted {}", user);
 			LOG.info("ID generated for Profile _____________, {}", user.getId());
 			accountProfileResponse.setId(user.getId());
 		} catch (Exception ex) {

@@ -37,9 +37,9 @@ public class TrialCondition {
     @Column(name = "question_id")
     private Long quesId;
 
-    @OneToOne
+/*    @OneToOne
     @JoinColumn(name="account_id")
-    private AccountProfile account;
+    private AccountProfile account;*/
 
     @Column(name = "pmp")
     @JsonProperty
@@ -115,13 +115,13 @@ public class TrialCondition {
         this.quesId = quesId;
     }
 
-    public AccountProfile getAccount() {
+  /*  public AccountProfile getAccount() {
         return account;
     }
 
     public void setAccount(AccountProfile account) {
         this.account = account;
-    }
+    }*/
 
     public String getPmp() {
         return pmp;
