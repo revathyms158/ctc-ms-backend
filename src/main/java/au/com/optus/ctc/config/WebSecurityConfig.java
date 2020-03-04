@@ -78,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 CorsConfiguration config = new CorsConfiguration();
                 config.setAllowedHeaders(Collections.singletonList("*"));
                 config.setAllowedMethods(Collections.singletonList("*"));
-                config.addAllowedOrigin("ec2-13-238-38-207.ap-southeast-2.compute.amazonaws.com");
+                config.addAllowedOrigin("*");
                 config.setAllowCredentials(true);
                 return config;
             }
