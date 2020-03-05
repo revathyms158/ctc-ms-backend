@@ -1,0 +1,335 @@
+DDL and DMl Scripts
+
+
+CREATE TABLE `users` (
+  `id_users` bigint(20) NOT NULL,
+  `age` int(11) DEFAULT NULL,
+  `created_on` datetime NOT NULL,
+  `dob` datetime DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  `address` varchar(255) DEFAULT NULL,
+  `updated_on` datetime NOT NULL,
+  `account_ques_id` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id_users`),
+  UNIQUE KEY `UK_6dotkott2kjsp8vw4d0m25fb7` (`email`),
+  UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`),
+  KEY `FK14lwypvkwipm9nonw336h3b5f` (`account_ques_id`),
+  CONSTRAINT `FK14lwypvkwipm9nonw336h3b5f` FOREIGN KEY (`account_ques_id`) REFERENCES `questions` (`question_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `questions` (
+  `question_id` bigint(20) NOT NULL,
+  `brcamutation` varchar(255) DEFAULT NULL,
+  `er` varchar(255) DEFAULT NULL,
+  `her2` varchar(255) DEFAULT NULL,
+  `pr` varchar(255) DEFAULT NULL,
+  `account_user_id` bigint(20) DEFAULT NULL,
+  `age` int(11) DEFAULT NULL,
+  `ecog` int(11) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `initial_diagnosis` datetime DEFAULT NULL,
+  `nodal_status` varchar(255) DEFAULT NULL,
+  `node_number` varchar(255) DEFAULT NULL,
+  `pmp` varchar(255) DEFAULT NULL,
+  `post_code` varchar(255) DEFAULT NULL,
+  `spread_to_other_parts` varchar(255) DEFAULT NULL,
+  `stage` int(11) DEFAULT NULL,
+  `tumour_size` varchar(255) DEFAULT NULL,
+  `tumour_type` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`question_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `role` (
+  `role_id` bigint(20) NOT NULL,
+  `role` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `trials_summary` (
+  `id_trials_summary` bigint(20) NOT NULL,
+  `age` int(11) DEFAULT NULL,
+  `anzctr` varchar(255) DEFAULT NULL,
+  `bct` varchar(255) DEFAULT NULL,
+  `created_on` datetime NOT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `node_number` varchar(255) DEFAULT NULL,
+  `phase` varchar(255) DEFAULT NULL,
+  `pmp` varchar(255) DEFAULT NULL,
+  `postcode` varchar(255) DEFAULT NULL,
+  `is_spread_to_other_parts` varchar(255) DEFAULT NULL,
+  `stage` varchar(255) DEFAULT NULL,
+  `subtype` varchar(255) DEFAULT NULL,
+  `summary` longtext,
+  `clinical_trialgov` varchar(255) DEFAULT NULL,
+  `tumour_size` int(11) DEFAULT NULL,
+  `updated_on` datetime NOT NULL,
+  PRIMARY KEY (`id_trials_summary`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `user_role` (
+  `id` bigint(20) NOT NULL,
+  `role_id` bigint(20) NOT NULL,
+  PRIMARY KEY (`id`,`role_id`),
+  UNIQUE KEY `UK_it77eq964jhfqtu54081ebtio` (`role_id`),
+  CONSTRAINT `FKa68196081fvovjhkek5m97n3y` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`),
+  CONSTRAINT `FKm01t79r1jd43urtdfwr98po4q` FOREIGN KEY (`id`) REFERENCES `users` (`id_users`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `user_summary` (
+  `id_users` bigint(20) NOT NULL,
+  `id_trials_summary` bigint(20) NOT NULL,
+  UNIQUE KEY `UK_270s19yid3n9rp6mfncdr1dbw` (`id_trials_summary`),
+  KEY `FKiugc3di8bqouvrbcr98wapo2c` (`id_users`),
+  CONSTRAINT `FKe73uovamqskluttnamkyqcuey` FOREIGN KEY (`id_trials_summary`) REFERENCES `trials_summary` (`id_trials_summary`),
+  CONSTRAINT `FKiugc3di8bqouvrbcr98wapo2c` FOREIGN KEY (`id_users`) REFERENCES `users` (`id_users`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+UPDATE `Clinical_Trials_Connect`.`questions`
+SET
+`question_id` = <{question_id: }>,
+`brcamutation` = <{brcamutation: }>,
+`er` = <{er: }>,
+`her2` = <{her2: }>,
+`pr` = <{pr: }>,
+`account_user_id` = <{account_user_id: }>,
+`age` = <{age: }>,
+`ecog` = <{ecog: }>,
+`gender` = <{gender: }>,
+`initial_diagnosis` = <{initial_diagnosis: }>,
+`nodal_status` = <{nodal_status: }>,
+`node_number` = <{node_number: }>,
+`pmp` = <{pmp: }>,
+`post_code` = <{post_code: }>,
+`spread_to_other_parts` = <{spread_to_other_parts: }>,
+`stage` = <{stage: }>,
+`tumour_size` = <{tumour_size: }>,
+`tumour_type` = <{tumour_type: }>
+WHERE `question_id` = <{expr}>;
+
+
+UPDATE `Clinical_Trials_Connect`.`role`
+SET
+`role_id` = <{role_id: }>,
+`role` = <{role: }>
+WHERE `role_id` = <{expr}>;
+
+
+UPDATE `Clinical_Trials_Connect`.`trials_summary`
+SET
+`id_trials_summary` = <{id_trials_summary: }>,
+`age` = <{age: }>,
+`anzctr` = <{anzctr: }>,
+`bct` = <{bct: }>,
+`created_on` = <{created_on: }>,
+`gender` = <{gender: }>,
+`location` = <{location: }>,
+`name` = <{name: }>,
+`node_number` = <{node_number: }>,
+`phase` = <{phase: }>,
+`pmp` = <{pmp: }>,
+`postcode` = <{postcode: }>,
+`is_spread_to_other_parts` = <{is_spread_to_other_parts: }>,
+`stage` = <{stage: }>,
+`subtype` = <{subtype: }>,
+`summary` = <{summary: }>,
+`clinical_trialgov` = <{clinical_trialgov: }>,
+`tumour_size` = <{tumour_size: }>,
+`updated_on` = <{updated_on: }>
+WHERE `id_trials_summary` = <{expr}>;
+
+
+UPDATE `Clinical_Trials_Connect`.`user_role`
+SET
+`id` = <{id: }>,
+`role_id` = <{role_id: }>
+WHERE `id` = <{expr}> AND `role_id` = <{expr}>;
+
+
+UPDATE `Clinical_Trials_Connect`.`users`
+SET
+`id_users` = <{id_users: }>,
+`age` = <{age: }>,
+`created_on` = <{created_on: }>,
+`dob` = <{dob: }>,
+`email` = <{email: }>,
+`first_name` = <{first_name: }>,
+`gender` = <{gender: }>,
+`last_name` = <{last_name: }>,
+`password` = <{password: }>,
+`address` = <{address: }>,
+`updated_on` = <{updated_on: }>,
+`account_ques_id` = <{account_ques_id: }>
+WHERE `id_users` = <{expr}>;
+
+
+UPDATE `Clinical_Trials_Connect`.`user_summary`
+SET
+`id_users` = <{id_users: }>,
+`id_trials_summary` = <{id_trials_summary: }>
+WHERE `id_trials_summary` = <{expr}>;
+
+
+INSERT INTO `Clinical_Trials_Connect`.`questions`
+(`question_id`,
+`brcamutation`,
+`er`,
+`her2`,
+`pr`,
+`account_user_id`,
+`age`,
+`ecog`,
+`gender`,
+`initial_diagnosis`,
+`nodal_status`,
+`node_number`,
+`pmp`,
+`post_code`,
+`spread_to_other_parts`,
+`stage`,
+`tumour_size`,
+`tumour_type`)
+VALUES
+(<{question_id: }>,
+<{brcamutation: }>,
+<{er: }>,
+<{her2: }>,
+<{pr: }>,
+<{account_user_id: }>,
+<{age: }>,
+<{ecog: }>,
+<{gender: }>,
+<{initial_diagnosis: }>,
+<{nodal_status: }>,
+<{node_number: }>,
+<{pmp: }>,
+<{post_code: }>,
+<{spread_to_other_parts: }>,
+<{stage: }>,
+<{tumour_size: }>,
+<{tumour_type: }>);
+
+
+INSERT INTO `Clinical_Trials_Connect`.`role`
+(`role_id`,
+`role`)
+VALUES
+(<{role_id: }>,
+<{role: }>);
+
+
+
+INSERT INTO `Clinical_Trials_Connect`.`trials_summary`
+(`id_trials_summary`,
+`age`,
+`anzctr`,
+`bct`,
+`created_on`,
+`gender`,
+`location`,
+`name`,
+`node_number`,
+`phase`,
+`pmp`,
+`postcode`,
+`is_spread_to_other_parts`,
+`stage`,
+`subtype`,
+`summary`,
+`clinical_trialgov`,
+`tumour_size`,
+`updated_on`)
+VALUES
+(<{id_trials_summary: }>,
+<{age: }>,
+<{anzctr: }>,
+<{bct: }>,
+<{created_on: }>,
+<{gender: }>,
+<{location: }>,
+<{name: }>,
+<{node_number: }>,
+<{phase: }>,
+<{pmp: }>,
+<{postcode: }>,
+<{is_spread_to_other_parts: }>,
+<{stage: }>,
+<{subtype: }>,
+<{summary: }>,
+<{clinical_trialgov: }>,
+<{tumour_size: }>,
+<{updated_on: }>);
+
+
+INSERT INTO `Clinical_Trials_Connect`.`user_role`
+(`id`,
+`role_id`)
+VALUES
+(<{id: }>,
+<{role_id: }>);
+
+
+
+INSERT INTO `Clinical_Trials_Connect`.`users`
+(`id_users`,
+`age`,
+`created_on`,
+`dob`,
+`email`,
+`first_name`,
+`gender`,
+`last_name`,
+`password`,
+`address`,
+`updated_on`,
+`account_ques_id`)
+VALUES
+(<{id_users: }>,
+<{age: }>,
+<{created_on: }>,
+<{dob: }>,
+<{email: }>,
+<{first_name: }>,
+<{gender: }>,
+<{last_name: }>,
+<{password: }>,
+<{address: }>,
+<{updated_on: }>,
+<{account_ques_id: }>);
+
+
+
+INSERT INTO `Clinical_Trials_Connect`.`user_summary`
+(`id_users`,
+`id_trials_summary`)
+VALUES
+(<{id_users: }>,
+<{id_trials_summary: }>);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
