@@ -121,22 +121,33 @@ public class TrialsController {
             result = filterService.getMatchingTrials(condition);
         }
         LOG.info("result :{}", result);
-
-        TrialCondition trials = trialsConditionRepository.save(condition);
-        LOG.info("trial conditions :{}", trials);
-
-        List<TrialsSummary> trialsSummaries = null;
-        if(result !=null && !result.isEmpty()) {
-            trialsSummaries  = trialsSummaryRepository.saveAll(result);
+        TrialCondition trials = null;
+        if(condition.getQuesId() != null) {
+            trials = trialsConditionRepository.findById(condition.getQuesId()).get();
+            trialsConditionRepository.save(condition);
+            LOG.info("Entering If block for second time user modifies questions :{}", trials);
+        } else{
+            trials = trialsConditionRepository.save(condition);
+            LOG.info("Entering else block for first time user answers questions :{}", trials);
         }
 
+        LOG.info("trial conditions :{}", trials);
+
+       /* List<TrialsSummary> trialsSummaries = null;
+        if(result !=null && !result.isEmpty()) {
+            trialsSummaries  = trialsSummaryRepository.saveAll(result);
+        }*/
+
+
+        LOG.info("Entering Account Details....");
         AccountProfile account = null;
         if(condition !=null && condition.getAccountUserId()!= null){
             Long id = condition.getAccountUserId();
             account = accountProfileRepository.findById(id).get();
+            LOG.info("Account Details without trials :{}", account);
             if(account != null) {
                 account.setCondition(trials);
-                account.setSummaries(trialsSummaries);
+                account.setSummaries(result);
                 account = accountProfileRepository.save(account);
                 LOG.info("account with trial details :{}", account);
             }
