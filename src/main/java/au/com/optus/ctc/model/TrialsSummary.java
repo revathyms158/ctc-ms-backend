@@ -198,7 +198,7 @@ public class TrialsSummary {
 
     @NonNull
     @Column(name = "Tumour_Size")
-    private String tumourSize;
+    private int tumourSize;
 
     @NonNull
     @Column(name = "Nodal_Status")
@@ -219,7 +219,7 @@ public class TrialsSummary {
     @NonNull
     @Column(name = "BRCA_Mutation")
     private String BRCAMutation;
-
+    
     @NonNull
     @Column(name = "e_Surgery")
     private String earlySurgery;

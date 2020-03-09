@@ -51,7 +51,7 @@ public class MyAccountController {
 	MyAccountServiceIF filterService;
 
 
-	@PostMapping(value = "/myaccount/createAccountProfile", headers = "Accept=application/json")
+	/*@PostMapping(value = "/myaccount/createAccountProfile", headers = "Accept=application/json")
 	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
 			throws JsonProcessingException {
 		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
@@ -80,9 +80,41 @@ public class MyAccountController {
 		}
 
 		return accountProfileResponse;
+	}*/
+
+
+	@PostMapping(value = "/myaccount/createAccountProfile", headers = "Accept=application/json")
+	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
+			throws JsonProcessingException {
+		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
+
+		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
+		if(profile != null && profile.getPassword() != null) {
+			profile.setPassword(bcryptEncoder.encode(profile.getPassword()));
+		}
+
+		if(profile != null && profile.getDob() != null) {
+			int age = utilFacade.calculateAge(profile.getDob());
+			profile.setAge(age);
+		}
+		profile.setCondition(null);
+
+		try{
+			AccountProfile user = repository.save(profile);
+			mapper.writeValueAsString(user);
+			LOG.info("Account creted {}", user);
+			LOG.info("ID generated for Profile _____________, {}", user.getId());
+			accountProfileResponse.setId(user.getId());
+		} catch (Exception ex) {
+			if(ex.getMessage().startsWith("could not")) {
+				accountProfileResponse.setErrorMessage("Duplicate entry for user");
+			}
+		}
+
+		return accountProfileResponse;
 	}
 
-	@PostMapping(value = "/getAccountDetails", consumes = { MediaType.APPLICATION_JSON_VALUE}, headers = "Accept=application/json")
+	@PostMapping(value = "/getAccountDetails", headers = "Accept=application/json")
 	public String getAccountProfile(@RequestBody String emailAddress)
 			throws JsonProcessingException {
 		LOG.info(" Get accountProfile  ____________ by  Emailaddress: , {}", emailAddress);
@@ -94,7 +126,7 @@ public class MyAccountController {
 	}
 
 
-    @PostMapping(value = "/addAdminUser", consumes = { MediaType.APPLICATION_JSON_VALUE}, headers = "Accept=application/json")
+    @PostMapping(value = "/addAdminUser", headers = "Accept=application/json")
     public String addadminUserByAdmin(@RequestBody AccountProfile profile) throws JsonProcessingException{
         if(profile != null && profile.getPassword() != null) {
             profile.setPassword(bcryptEncoder.encode(profile.getPassword()));

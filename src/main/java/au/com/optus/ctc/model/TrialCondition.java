@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
@@ -57,9 +58,9 @@ public class TrialCondition {
     @JsonProperty
     private String postCode;
 
-    @Column(name = "gender")
+    @Column(name = "Sex")
     @JsonProperty
-    private String gender;
+    private String Sex;
 
     @Column(name = "nodalStatus")
     @JsonProperty
@@ -97,6 +98,7 @@ public class TrialCondition {
     @JsonProperty
     private int stage;
 
+    @ElementCollection
     @Column(name = "BRCAMutation")
     @JsonProperty
     private List<String> BRCAMutation;
@@ -111,17 +113,21 @@ public class TrialCondition {
 
     private Long accountUserId;
 
+
+    @ElementCollection
     @Column(name = "Research_interest")
     @JsonProperty
     private List<String> researchInterest;
 
+    @ElementCollection
     @Column(name = "Symptoms")
     @JsonProperty
-    private String Symptoms;
+    private List<String> Symptoms;
 
+    /*@ElementCollection
     @Column(name = "breastCancerSpreadToOtherParts")
     @JsonProperty
-    private String breastCancerSpreadToOtherParts;
+    private List<String> breastCancerSpreadToOtherParts;*/
 
     @Column(name = "e_Surgery")
     @JsonProperty
@@ -200,7 +206,6 @@ public class TrialCondition {
     @JsonProperty
     private String advancedImmunotherapy;
 
-
     public Long getQuesId() {
         return quesId;
     }
@@ -233,12 +238,12 @@ public class TrialCondition {
         this.postCode = postCode;
     }
 
-    public String getGender() {
-        return gender;
+    public String getSex() {
+        return Sex;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setSex(String sex) {
+        Sex = sex;
     }
 
     public String getNodalStatus() {
@@ -353,20 +358,12 @@ public class TrialCondition {
         this.researchInterest = researchInterest;
     }
 
-    public String getSymptoms() {
+    public List<String> getSymptoms() {
         return Symptoms;
     }
 
-    public void setSymptoms(String symptoms) {
+    public void setSymptoms(List<String> symptoms) {
         Symptoms = symptoms;
-    }
-
-    public String getBreastCancerSpreadToOtherParts() {
-        return breastCancerSpreadToOtherParts;
-    }
-
-    public void setBreastCancerSpreadToOtherParts(String breastCancerSpreadToOtherParts) {
-        this.breastCancerSpreadToOtherParts = breastCancerSpreadToOtherParts;
     }
 
     public String getEarlySurgery() {
