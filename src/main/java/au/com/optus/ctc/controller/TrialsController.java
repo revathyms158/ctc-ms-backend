@@ -150,6 +150,7 @@ public class TrialsController {
                 account.setSummaries(result);
                 account = accountProfileRepository.save(account);
                 LOG.info("account with trial details :{}", account);
+                LOG.info("account with trial details :{}", account.getSummaries());
             }
         }
 
@@ -178,13 +179,17 @@ public class TrialsController {
     }
 
 */
-    @PostMapping(value = "/removeUser/{quesId}", headers = "Accept=application/json")
-    public String fetchRemovedTrials(@PathVariable final Long quesId)  {
-        Optional<TrialCondition> condition = trialsConditionRepository.findById(quesId);
-        if(condition!=null && condition.get().getAccountUserId()!= null) {
-            Long id = condition.get().getAccountUserId();
-            trialsConditionRepository.deleteById(quesId);
-            accountProfileRepository.deleteById(id);
+    @PostMapping(value = "/removeUser/{userID}", headers = "Accept=application/json")
+    public String fetchRemovedTrials(@PathVariable final Long userID)  {
+        AccountProfile account = accountProfileRepository.findById(userID).get();
+        if(account != null && account.getCondition().getQuesId()!= null) {
+            LOG.info("Insert into if condition for delete");
+            Long id = account.getCondition().getQuesId();
+            accountProfileRepository.deleteById(userID);
+            trialsConditionRepository.deleteById(id);
+        } else{
+            LOG.info("Insert into else condition for delete");
+            accountProfileRepository.deleteById(userID);
         }
         return "Trial is deleted";
     }

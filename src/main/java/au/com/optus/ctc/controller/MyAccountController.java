@@ -50,31 +50,8 @@ public class MyAccountController {
 	@Autowired(required = false)
 	MyAccountServiceIF filterService;
 
-	/*@PostMapping(value = "/myaccount/createAccountProfile", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
-	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
-			throws JsonProcessingException {
-		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
-		*//*
-		 * if (profile != null) { LOG.info("accountProfile, {}",
-		 * profile.toString()); if
-		 * (filterService.findEmail(profile.getEmailAddress()) == 0) {
-		 * profile.setId(UUID.randomUUID().toString());
-		 * mapper.writeValueAsString(repository.save(profile)); }
-		 * 
-		 * }
-		 *//*
-		profile.setId(UUID.randomUUID().toString());
-		mapper.writeValueAsString(repository.save(profile));
-		LOG.info("ID generated for Profile _____________, {}", profile.getId());
-		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
-		accountProfileResponse.setId(profile.getId());
-		return accountProfileResponse;
-	}*/
 
-
-	@PostMapping(value = "/myaccount/createAccountProfile", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
+	@PostMapping(value = "/myaccount/createAccountProfile", headers = "Accept=application/json")
 	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
 			throws JsonProcessingException {
 		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
@@ -105,8 +82,7 @@ public class MyAccountController {
 		return accountProfileResponse;
 	}
 
-	@PostMapping(value = "/getAccountDetails", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
+	@PostMapping(value = "/getAccountDetails", consumes = { MediaType.APPLICATION_JSON_VALUE}, headers = "Accept=application/json")
 	public String getAccountProfile(@RequestBody String emailAddress)
 			throws JsonProcessingException {
 		LOG.info(" Get accountProfile  ____________ by  Emailaddress: , {}", emailAddress);
@@ -118,8 +94,7 @@ public class MyAccountController {
 	}
 
 
-    @PostMapping(value = "/addAdminUser", consumes = { MediaType.APPLICATION_JSON_VALUE,
-            MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
+    @PostMapping(value = "/addAdminUser", consumes = { MediaType.APPLICATION_JSON_VALUE}, headers = "Accept=application/json")
     public String addadminUserByAdmin(@RequestBody AccountProfile profile) throws JsonProcessingException{
         if(profile != null && profile.getPassword() != null) {
             profile.setPassword(bcryptEncoder.encode(profile.getPassword()));

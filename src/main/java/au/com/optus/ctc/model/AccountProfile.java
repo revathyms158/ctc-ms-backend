@@ -24,10 +24,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -105,11 +107,16 @@ public class AccountProfile {
     @JoinColumn(name="account_ques_id")
     private TrialCondition condition;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
-    @JoinTable(name = "user_summary", joinColumns  =@JoinColumn(name="id_users"),inverseJoinColumns = @JoinColumn(name="id_trials_summary"))
-    @JsonProperty
-    private List<TrialsSummary> summaries;
+  /*  @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+    @JoinColumn(name = "user_summary_id")
+    private List<TrialsSummary> summaries;*/
 
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+    @JoinTable(name = "USER_TrialsSummary",
+            joinColumns = { @JoinColumn(name = "User_ID") },
+            inverseJoinColumns = { @JoinColumn(name = "TrialSummary_ID") })
+    private List<TrialsSummary> summaries = new ArrayList<TrialsSummary>();
 
     @Column(name = "created_on", nullable = false, updatable = false)
 // @Temporal(TemporalType.TIMESTAMP)
@@ -139,7 +146,8 @@ public class AccountProfile {
         this.summaries = summaries;
     }
 
-/*public String getEmailAddress() {
+
+    /*public String getEmailAddress() {
         return emailAddress;
     }
 
