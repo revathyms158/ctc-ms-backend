@@ -3,21 +3,26 @@ package au.com.optus.ctc.dao;
 import au.com.optus.ctc.model.TrialsSummary;
 import org.springframework.data.jpa.domain.Specification;
 
+import static antlr.build.ANTLR.root;
+
 /**
  * @author revathyms
  */
 public class TrialFilterSpecification {
 
     public static Specification<TrialsSummary> hasSpreadToOtherParts(String spreadToOtherParts) {
-        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("spreadToOtherParts"), "%" + spreadToOtherParts + "%");
+        String spreadToOtherParts1 = "%" + spreadToOtherParts + "%";
+        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("spreadToOtherParts"), "%" + spreadToOtherParts1 + "%");
     }
 
     public static Specification<TrialsSummary> withSex(String gender) {
-        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("Sex"), "%" + gender + "%");
+        String gender1 = "%" + gender + "%";
+        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("Sex"), "%" + gender1 + "%");
     }
 
     public static Specification<TrialsSummary> hasPmp(String pmp) {
-        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("pmp"), "%" + pmp + "%");
+        String pmp1 = "%" + pmp + "%";
+        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("pmp"), "%" + pmp1 + "%");
     }
 
     public static Specification<TrialsSummary> hasAge(int age) {
@@ -29,6 +34,8 @@ public class TrialFilterSpecification {
     }
 
     public static Specification<TrialsSummary> hasNodeNumber(String nodeNumber) {
-        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("nodeNumber"), "%" + nodeNumber + "%");
+        String nodeNumber1 = "%" + nodeNumber + "%";
+        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("nodeNumber"), nodeNumber1);
+
     }
 }

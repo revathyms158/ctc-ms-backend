@@ -51,39 +51,8 @@ public class MyAccountController {
 	MyAccountServiceIF filterService;
 
 
-	/*@PostMapping(value = "/myaccount/createAccountProfile", headers = "Accept=application/json")
-	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
-			throws JsonProcessingException {
-		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
-
-		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
-		if(profile != null && profile.getPassword() != null) {
-			profile.setPassword(bcryptEncoder.encode(profile.getPassword()));
-		}
-
-		if(profile != null && profile.getDob() != null) {
-			int age = utilFacade.calculateAge(profile.getDob());
-			profile.setAge(age);
-		}
-            profile.setCondition(null);
-
-    	try{
-			AccountProfile user = repository.save(profile);
-			mapper.writeValueAsString(user);
-            LOG.info("Account creted {}", user);
-			LOG.info("ID generated for Profile _____________, {}", user.getId());
-			accountProfileResponse.setId(user.getId());
-		} catch (Exception ex) {
-			if(ex.getMessage().startsWith("could not")) {
-				accountProfileResponse.setErrorMessage("Duplicate entry for user");
-			}
-		}
-
-		return accountProfileResponse;
-	}*/
-
-
-	@PostMapping(value = "/myaccount/createAccountProfile", headers = "Accept=application/json")
+	@PostMapping(value = "/myaccount/createAccountProfile", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
 	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
 			throws JsonProcessingException {
 		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
@@ -127,11 +96,21 @@ public class MyAccountController {
 
 
     @PostMapping(value = "/addAdminUser", headers = "Accept=application/json")
-    public String addadminUserByAdmin(@RequestBody AccountProfile profile) throws JsonProcessingException{
+    public AccountProfileResponse addadminUserByAdmin(@RequestBody AccountProfile profile) throws JsonProcessingException{
+		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
         if(profile != null && profile.getPassword() != null) {
             profile.setPassword(bcryptEncoder.encode(profile.getPassword()));
         }
-        AccountProfile user = repository.save(profile);
-        return  mapper.writeValueAsString("Admin user added successfully");
+		try {
+			AccountProfile user = repository.save(profile);
+			mapper.writeValueAsString(user);
+			accountProfileResponse.setId(user.getId());
+		} catch (Exception ex) {
+			if(ex.getMessage().startsWith("could not")) {
+				accountProfileResponse.setErrorMessage("Duplicate entry for user");
+			}
+		}
+		return accountProfileResponse;
     }
+
 }

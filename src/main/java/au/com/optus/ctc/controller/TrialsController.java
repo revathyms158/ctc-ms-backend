@@ -132,14 +132,6 @@ public class TrialsController {
         }
 
         LOG.info("trial conditions :{}", trials);
-
-       /* List<TrialsSummary> trialsSummaries = null;
-        if(result !=null && !result.isEmpty()) {
-            trialsSummaries  = trialsSummaryRepository.saveAll(result);
-        }*/
-
-
-        LOG.info("Entering Account Details....");
         AccountProfile account = null;
         if(condition !=null && condition.getAccountUserId()!= null){
             Long id = condition.getAccountUserId();
@@ -153,7 +145,6 @@ public class TrialsController {
                 LOG.info("account with trial details :{}", account.getSummaries());
             }
         }
-
         return  mapper.writeValueAsString(result);
     }
 

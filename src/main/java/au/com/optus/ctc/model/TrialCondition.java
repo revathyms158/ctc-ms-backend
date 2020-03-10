@@ -42,10 +42,6 @@ public class TrialCondition {
     @Column(name = "question_id")
     private Long quesId;
 
-/*    @OneToOne
-    @JoinColumn(name="account_id")
-    private AccountProfile account;*/
-
     @Column(name = "pmp")
     @JsonProperty
     private String pmp;
@@ -98,10 +94,10 @@ public class TrialCondition {
     @JsonProperty
     private int stage;
 
-    @ElementCollection
+   /* @ElementCollection
     @Column(name = "BRCAMutation")
     @JsonProperty
-    private List<String> BRCAMutation;
+    private List<String> BRCAMutation;*/
 
     @Column(name = "initialDiagnosis")
     @JsonProperty
@@ -124,10 +120,10 @@ public class TrialCondition {
     @JsonProperty
     private List<String> Symptoms;
 
-    /*@ElementCollection
+    @ElementCollection
     @Column(name = "breastCancerSpreadToOtherParts")
     @JsonProperty
-    private List<String> breastCancerSpreadToOtherParts;*/
+    private List<String> breastCancerSpreadToOtherParts;
 
     @Column(name = "e_Surgery")
     @JsonProperty
@@ -136,7 +132,7 @@ public class TrialCondition {
 
     @Column(name = "e_Hormones")
     @JsonProperty
-    private String earlyHormones;
+    private String earlyHormonaltherapy;
 
 
     @Column(name = "e_Chemotherapy")
@@ -146,17 +142,17 @@ public class TrialCondition {
 
     @Column(name = "e_HER2_Therapy")
     @JsonProperty
-    private String earlyHER2Therapy;
+    private String earlyTargetedTxHERTherapy;
 
 
     @Column(name = "e_CDK_Inhibitor")
     @JsonProperty
-    private String earlyCDKInhibitor;
+    private String earlyTargetedTxCDKInhibitor;
 
 
     @Column(name = "e_PARP_Inhibitor")
     @JsonProperty
-    private String earlyPARPInhibitor;
+    private String earlyTargetedTxPARPInhibitor;
 
 
     @Column(name = "e_Immunotherapy")
@@ -176,7 +172,7 @@ public class TrialCondition {
 
     @Column(name = "adv_Hormones")
     @JsonProperty
-    private String advancedHormones;
+    private String advancedHormonaltherapy;
 
     @Column(name = "adv_Radiotherapy")
     @JsonProperty
@@ -190,16 +186,16 @@ public class TrialCondition {
 
     @Column(name = "adv_CDK_Inhibitor")
     @JsonProperty
-    private String advancedCDKInhibitor;
+    private String advancedTargetedTxCDKInhibitor;
 
 
     @Column(name = "adv_HER2_Therapy")
     @JsonProperty
-    private String advancedHER2Therapy;
+    private String advancedTargetedTxHERTherapy;
 
     @Column(name = "adv_PARP_Inhibitor")
     @JsonProperty
-    private String advancedPARPInhibitor;
+    private String advancedTargetedTxPARPInhibitor;
 
 
     @Column(name = "adv_Immunotherapy")
@@ -318,14 +314,6 @@ public class TrialCondition {
         this.stage = stage;
     }
 
-    public List<String> getBRCAMutation() {
-        return BRCAMutation;
-    }
-
-    public void setBRCAMutation(List<String> BRCAMutation) {
-        this.BRCAMutation = BRCAMutation;
-    }
-
     public String getDiagnosis() {
         return diagnosis;
     }
@@ -366,6 +354,14 @@ public class TrialCondition {
         Symptoms = symptoms;
     }
 
+    public List<String> getBreastCancerSpreadToOtherParts() {
+        return breastCancerSpreadToOtherParts;
+    }
+
+    public void setBreastCancerSpreadToOtherParts(List<String> breastCancerSpreadToOtherParts) {
+        this.breastCancerSpreadToOtherParts = breastCancerSpreadToOtherParts;
+    }
+
     public String getEarlySurgery() {
         return earlySurgery;
     }
@@ -374,12 +370,12 @@ public class TrialCondition {
         this.earlySurgery = earlySurgery;
     }
 
-    public String getEarlyHormones() {
-        return earlyHormones;
+    public String getEarlyHormonaltherapy() {
+        return earlyHormonaltherapy;
     }
 
-    public void setEarlyHormones(String earlyHormones) {
-        this.earlyHormones = earlyHormones;
+    public void setEarlyHormonaltherapy(String earlyHormonaltherapy) {
+        this.earlyHormonaltherapy = earlyHormonaltherapy;
     }
 
     public String getEarlyChemotherapy() {
@@ -390,28 +386,28 @@ public class TrialCondition {
         this.earlyChemotherapy = earlyChemotherapy;
     }
 
-    public String getEarlyHER2Therapy() {
-        return earlyHER2Therapy;
+    public String getEarlyTargetedTxHERTherapy() {
+        return earlyTargetedTxHERTherapy;
     }
 
-    public void setEarlyHER2Therapy(String earlyHER2Therapy) {
-        this.earlyHER2Therapy = earlyHER2Therapy;
+    public void setEarlyTargetedTxHERTherapy(String earlyTargetedTxHERTherapy) {
+        this.earlyTargetedTxHERTherapy = earlyTargetedTxHERTherapy;
     }
 
-    public String getEarlyCDKInhibitor() {
-        return earlyCDKInhibitor;
+    public String getEarlyTargetedTxCDKInhibitor() {
+        return earlyTargetedTxCDKInhibitor;
     }
 
-    public void setEarlyCDKInhibitor(String earlyCDKInhibitor) {
-        this.earlyCDKInhibitor = earlyCDKInhibitor;
+    public void setEarlyTargetedTxCDKInhibitor(String earlyTargetedTxCDKInhibitor) {
+        this.earlyTargetedTxCDKInhibitor = earlyTargetedTxCDKInhibitor;
     }
 
-    public String getEarlyPARPInhibitor() {
-        return earlyPARPInhibitor;
+    public String getEarlyTargetedTxPARPInhibitor() {
+        return earlyTargetedTxPARPInhibitor;
     }
 
-    public void setEarlyPARPInhibitor(String earlyPARPInhibitor) {
-        this.earlyPARPInhibitor = earlyPARPInhibitor;
+    public void setEarlyTargetedTxPARPInhibitor(String earlyTargetedTxPARPInhibitor) {
+        this.earlyTargetedTxPARPInhibitor = earlyTargetedTxPARPInhibitor;
     }
 
     public String getEarlyImmunotherapy() {
@@ -438,12 +434,12 @@ public class TrialCondition {
         this.advancedChemotherapy = advancedChemotherapy;
     }
 
-    public String getAdvancedHormones() {
-        return advancedHormones;
+    public String getAdvancedHormonaltherapy() {
+        return advancedHormonaltherapy;
     }
 
-    public void setAdvancedHormones(String advancedHormones) {
-        this.advancedHormones = advancedHormones;
+    public void setAdvancedHormonaltherapy(String advancedHormonaltherapy) {
+        this.advancedHormonaltherapy = advancedHormonaltherapy;
     }
 
     public String getAdvancedRadiotherapy() {
@@ -462,28 +458,28 @@ public class TrialCondition {
         this.advancedSurgery = advancedSurgery;
     }
 
-    public String getAdvancedCDKInhibitor() {
-        return advancedCDKInhibitor;
+    public String getAdvancedTargetedTxCDKInhibitor() {
+        return advancedTargetedTxCDKInhibitor;
     }
 
-    public void setAdvancedCDKInhibitor(String advancedCDKInhibitor) {
-        this.advancedCDKInhibitor = advancedCDKInhibitor;
+    public void setAdvancedTargetedTxCDKInhibitor(String advancedTargetedTxCDKInhibitor) {
+        this.advancedTargetedTxCDKInhibitor = advancedTargetedTxCDKInhibitor;
     }
 
-    public String getAdvancedHER2Therapy() {
-        return advancedHER2Therapy;
+    public String getAdvancedTargetedTxHERTherapy() {
+        return advancedTargetedTxHERTherapy;
     }
 
-    public void setAdvancedHER2Therapy(String advancedHER2Therapy) {
-        this.advancedHER2Therapy = advancedHER2Therapy;
+    public void setAdvancedTargetedTxHERTherapy(String advancedTargetedTxHERTherapy) {
+        this.advancedTargetedTxHERTherapy = advancedTargetedTxHERTherapy;
     }
 
-    public String getAdvancedPARPInhibitor() {
-        return advancedPARPInhibitor;
+    public String getAdvancedTargetedTxPARPInhibitor() {
+        return advancedTargetedTxPARPInhibitor;
     }
 
-    public void setAdvancedPARPInhibitor(String advancedPARPInhibitor) {
-        this.advancedPARPInhibitor = advancedPARPInhibitor;
+    public void setAdvancedTargetedTxPARPInhibitor(String advancedTargetedTxPARPInhibitor) {
+        this.advancedTargetedTxPARPInhibitor = advancedTargetedTxPARPInhibitor;
     }
 
     public String getAdvancedImmunotherapy() {

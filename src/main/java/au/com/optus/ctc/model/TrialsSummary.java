@@ -219,14 +219,14 @@ public class TrialsSummary {
     @NonNull
     @Column(name = "BRCA_Mutation")
     private String BRCAMutation;
-    
+
     @NonNull
     @Column(name = "e_Surgery")
     private String earlySurgery;
 
     @NonNull
     @Column(name = "e_Hormones")
-    private String earlyHormones;
+    private String earlyHormonaltherapy;
 
     @NonNull
     @Column(name = "e_Chemotherapy")
@@ -234,15 +234,15 @@ public class TrialsSummary {
 
     @NonNull
     @Column(name = "e_HER2_Therapy")
-    private String earlyHER2Therapy;
+    private String earlyTargetedTxHERTherapy;
 
     @NonNull
     @Column(name = "e_CDK_Inhibitor")
-    private String earlyCDKInhibitor;
+    private String earlyTargetedTxCDKInhibitor;
 
     @NonNull
     @Column(name = "e_PARP_Inhibitor")
-    private String earlyPARPInhibitor;
+    private String earlyTargetedTxPARPInhibitor;
 
     @NonNull
     @Column(name = "e_Immunotherapy")
@@ -259,7 +259,7 @@ public class TrialsSummary {
 
     @NonNull
     @Column(name = "adv_Hormones")
-    private String advancedHormones;
+    private String advancedHormonaltherapy;
 
     @NonNull
     @Column(name = "adv_Chemotherapy")
@@ -267,15 +267,15 @@ public class TrialsSummary {
 
     @NonNull
     @Column(name = "adv_HER2_Therapy")
-    private String advancedHER2Therapy;
+    private String advancedTargetedTxHERTherapy;
 
     @NonNull
     @Column(name = "adv_CDK_Inhibitor")
-    private String advancedCDKInhibitor;
+    private String advancedTargetedTxCDKInhibitor;
 
     @NonNull
     @Column(name = "adv_PARP_Inhibitor")
-    private String advancedPARPInhibitor;
+    private String advancedTargetedTxPARPInhibitor;
 
     @NonNull
     @Column(name = "adv_Immunotherapy")
@@ -391,13 +391,13 @@ public class TrialsSummary {
 
 
     @Column(name = "created_on", nullable = false, updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.PROTECTED)
     @CreatedDate
     private Date createdOn;
 
     @Column(name = "updated_on", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+    //@Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.PROTECTED)
     @LastModifiedDate
     private Date updatedOn;
