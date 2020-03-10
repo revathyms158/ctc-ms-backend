@@ -12,8 +12,8 @@ public class TrialFilterSpecification {
         return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("spreadToOtherParts"), "%" + spreadToOtherParts + "%");
     }
 
-    public static Specification<TrialsSummary> withGender(String gender) {
-        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("gender"), "%" + gender + "%");
+    public static Specification<TrialsSummary> withSex(String gender) {
+        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("Sex"), "%" + gender + "%");
     }
 
     public static Specification<TrialsSummary> hasPmp(String pmp) {

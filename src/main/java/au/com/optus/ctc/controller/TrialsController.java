@@ -105,8 +105,8 @@ public class TrialsController {
     public String fetchMatchingTrials(@RequestBody TrialCondition condition) throws JsonProcessingException {
         LOG.info("inside fetchMatchingTrials():: condition ->{}", condition);
         List<TrialsSummary> result = new ArrayList<>();
-        if(StringUtils.isBlank(condition.getSex())){
-            condition.setSex(GenderEnum.NA.value());
+        if(StringUtils.isBlank(condition.getGender())){
+            condition.setGender(GenderEnum.NA.value());
         }
         if(StringUtils.isBlank(condition.getTumourSize())){
             condition.setTumourSize("Any");

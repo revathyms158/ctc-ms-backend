@@ -88,7 +88,6 @@ public class AccountProfile {
     private GenderEnum gender;
 
 
-
     @Column(name = "dob")
     @JsonProperty
     private Date dob;

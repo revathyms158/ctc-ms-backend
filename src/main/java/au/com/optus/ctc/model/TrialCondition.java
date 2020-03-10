@@ -58,9 +58,9 @@ public class TrialCondition {
     @JsonProperty
     private String postCode;
 
-    @Column(name = "Sex")
+    @Column(name = "gender")
     @JsonProperty
-    private String Sex;
+    private String gender;
 
     @Column(name = "nodalStatus")
     @JsonProperty
@@ -238,12 +238,12 @@ public class TrialCondition {
         this.postCode = postCode;
     }
 
-    public String getSex() {
-        return Sex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setSex(String sex) {
-        Sex = sex;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getNodalStatus() {
