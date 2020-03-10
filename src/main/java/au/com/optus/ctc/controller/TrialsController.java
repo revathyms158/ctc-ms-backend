@@ -177,7 +177,7 @@ public class TrialsController {
             LOG.info("Insert into if condition for delete");
             Long id = account.getCondition().getQuesId();
             accountProfileRepository.deleteById(userID);
-            trialsConditionRepository.deleteById(id);
+            //trialsConditionRepository.deleteById(id);
         } else{
             LOG.info("Insert into else condition for delete");
             accountProfileRepository.deleteById(userID);

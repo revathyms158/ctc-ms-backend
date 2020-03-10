@@ -51,8 +51,7 @@ public class MyAccountController {
 	MyAccountServiceIF filterService;
 
 
-	@PostMapping(value = "/myaccount/createAccountProfile", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE }, headers = "Accept=application/json, application/json;charset=UTF-8")
+	@PostMapping(value = "/myaccount/createAccountProfile", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE}, headers = "Accept=application/json, application/json;charset=UTF-8")
 	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
 			throws JsonProcessingException {
 		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
@@ -95,7 +94,9 @@ public class MyAccountController {
 	}
 
 
-    @PostMapping(value = "/addAdminUser", headers = "Accept=application/json")
+
+    @PostMapping(value = "/addAdminUser", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_JSON_UTF8_VALUE },headers = "Accept=application/json, application/json;charset=UTF-8")
     public AccountProfileResponse addadminUserByAdmin(@RequestBody AccountProfile profile) throws JsonProcessingException{
 		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
         if(profile != null && profile.getPassword() != null) {
