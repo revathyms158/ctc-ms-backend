@@ -97,12 +97,16 @@ public class AccountProfile {
     @JsonProperty
     private String postCode;
 
+    @Column(name = "status")
+    @JsonProperty
+    private String status;
+
     @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns  =@JoinColumn(name="id"),inverseJoinColumns = @JoinColumn(name="role_id"))
     @JsonProperty
     private Set<Role> roles;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+    @OneToOne(cascade = CascadeType.ALL, fetch= FetchType.EAGER, orphanRemoval=true)
     @JoinColumn(name="account_ques_id")
     private TrialCondition condition;
 
@@ -143,6 +147,14 @@ public class AccountProfile {
 
     public void setSummaries(List<TrialsSummary> summaries) {
         this.summaries = summaries;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 

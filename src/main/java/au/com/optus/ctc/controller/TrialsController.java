@@ -171,18 +171,13 @@ public class TrialsController {
 
 */
     @PostMapping(value = "/removeUser/{userID}", headers = "Accept=application/json")
-    public String fetchRemovedTrials(@PathVariable final Long userID)  {
-        AccountProfile account = accountProfileRepository.findById(userID).get();
-        if(account != null && account.getCondition().getQuesId()!= null) {
-            LOG.info("Insert into if condition for delete");
-            Long id = account.getCondition().getQuesId();
-            accountProfileRepository.deleteById(userID);
-            //trialsConditionRepository.deleteById(id);
-        } else{
-            LOG.info("Insert into else condition for delete");
-            accountProfileRepository.deleteById(userID);
-        }
-        return "Trial is deleted";
+    public String fetchRemovedTrials(@PathVariable final Long userID)  throws JsonProcessingException {
+        AccountProfile account = null;
+        account = accountProfileRepository.findById(userID).get();
+        account.setStatus("Inactive");
+        account = accountProfileRepository.save(account);
+        LOG.info("Account :{}", account);
+        return mapper.writeValueAsString(account);
     }
 
     @GetMapping(value = "/trialsSummary",  headers = "Accept=application/json")
