@@ -11,8 +11,7 @@ import static antlr.build.ANTLR.root;
 public class TrialFilterSpecification {
 
     public static Specification<TrialsSummary> hasSpreadToOtherParts(String spreadToOtherParts) {
-        String spreadToOtherParts1 = "%" + spreadToOtherParts + "%";
-        return (trialsSummaryRoot, cq, cb) -> cb.like(trialsSummaryRoot.get("spreadToOtherParts"), "%" + spreadToOtherParts1 + "%");
+        return (trialsSummaryRoot, cq, cb) -> cb.equal(trialsSummaryRoot.get("spreadToOtherParts"), spreadToOtherParts);
     }
 
     public static Specification<TrialsSummary> withSex(String gender) {

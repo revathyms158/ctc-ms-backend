@@ -12,7 +12,5 @@ import java.util.List;
  */
 @Repository
 public interface TrialsSummaryRepository extends JpaRepository<TrialsSummary, Long>, JpaSpecificationExecutor<TrialsSummary> {
-
     public List<TrialsSummary> findByName(String name);
-
 }

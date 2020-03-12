@@ -18,7 +18,7 @@ import java.util.List;
 public class TrialsSpecificParams {
 
     private Long userId;
-    private List<Long> trialIds;
+    private Long trialId;
 
     public Long getUserId() {
         return userId;
@@ -28,11 +28,11 @@ public class TrialsSpecificParams {
         this.userId = userId;
     }
 
-    public List<Long> getTrialIds() {
-        return trialIds;
+    public Long getTrialId() {
+        return trialId;
     }
 
-    public void setTrialIds(List<Long> trialIds) {
-        this.trialIds = trialIds;
+    public void setTrialId(Long trialId) {
+        this.trialId = trialId;
     }
 }

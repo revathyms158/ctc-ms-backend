@@ -193,16 +193,18 @@ public class TrialsController {
 
     @GetMapping(value = "/userFavouriteTrials", headers = "Accept=application/json")
     public String userFavouriteTrials(@RequestBody TrialsSpecificParams params) throws JsonProcessingException {
-        List<Long> trialIds = params.getTrialIds();
+        Long trialId = params.getTrialId();
         Long userId = params.getUserId();
-        List<TrialsSummary> summaries = (List<TrialsSummary>) trialsSummaryRepository.findAllById(trialIds);
+        /*List<TrialsSummary> summaries = (List<TrialsSummary>) trialsSummaryRepository.findAllById(trialIds);
         LOG.info("summaries :{}", summaries);
         AccountProfile account = null;
         account = accountProfileRepository.findById(userId).get();
         account.setSummaries(summaries);
         account = accountProfileRepository.save(account);
-        LOG.info("Account :{}", account);
-        return mapper.writeValueAsString(account);
+        LOG.info("Account :{}", account);*/
+        return null;
     }
+
+
 
 }
