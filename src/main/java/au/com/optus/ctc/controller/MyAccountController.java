@@ -51,7 +51,7 @@ public class MyAccountController {
 	MyAccountServiceIF filterService;
 
 
-	@PostMapping(value = "/myaccount/createAccountProfile", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_JSON_UTF8_VALUE}, headers = "Accept=application/json, application/json;charset=UTF-8")
+	@PostMapping(value = "/myaccount/createAccountProfile", headers = "Accept=application/json")
 	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
 			throws JsonProcessingException {
 		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
@@ -73,6 +73,7 @@ public class MyAccountController {
 			LOG.info("Account creted {}", user);
 			LOG.info("ID generated for Profile _____________, {}", user.getId());
 			accountProfileResponse.setId(user.getId());
+			accountProfileResponse.setAge(user.getAge());
 		} catch (Exception ex) {
 			if(ex.getMessage().startsWith("could not")) {
 				accountProfileResponse.setErrorMessage("Duplicate entry for user");
@@ -95,8 +96,7 @@ public class MyAccountController {
 
 
 
-    @PostMapping(value = "/addAdminUser", consumes = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_JSON_UTF8_VALUE },headers = "Accept=application/json, application/json;charset=UTF-8")
+    @PostMapping(value = "/addAdminUser" , headers = "Accept=application/json")
     public AccountProfileResponse addadminUserByAdmin(@RequestBody AccountProfile profile) throws JsonProcessingException{
 		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
         if(profile != null && profile.getPassword() != null) {
