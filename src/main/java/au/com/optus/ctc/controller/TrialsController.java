@@ -6,6 +6,7 @@ import au.com.optus.ctc.dao.TrialsSummaryRepository;
 import au.com.optus.ctc.model.AccountProfile;
 import au.com.optus.ctc.model.GenderEnum;
 import au.com.optus.ctc.model.TrialCondition;
+import au.com.optus.ctc.model.TrialsSpecificParams;
 import au.com.optus.ctc.model.TrialsSummary;
 import au.com.optus.ctc.service.TrialFilterServiceIF;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,11 +23,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static javafx.scene.input.KeyCode.L;
 
 /**
  * @author revathyms
@@ -139,7 +143,7 @@ public class TrialsController {
             LOG.info("Account Details without trials :{}", account);
             if(account != null) {
                 account.setCondition(trials);
-                account.setSummaries(result);
+                //account.setSummaries(result);
                 account = accountProfileRepository.save(account);
                 LOG.info("account with trial details :{}", account);
                 LOG.info("account with trial details :{}", account.getSummaries());
@@ -180,11 +184,25 @@ public class TrialsController {
         return mapper.writeValueAsString(account);
     }
 
-    @GetMapping(value = "/trialsSummary",  headers = "Accept=application/json")
+   /* @GetMapping(value = "/trialsSummary",  headers = "Accept=application/json")
     public String getAllUsersSavedTrialSummary() throws JsonProcessingException {
         List<TrialsSummary> summaries = trialsSummaryRepository.findAll();
         LOG.info("trial summary :{}", summaries);
         return mapper.writeValueAsString(summaries);
+    }*/
+
+    @GetMapping(value = "/userFavouriteTrials", headers = "Accept=application/json")
+    public String userFavouriteTrials(@RequestBody TrialsSpecificParams params) throws JsonProcessingException {
+        List<Long> trialIds = params.getTrialIds();
+        Long userId = params.getUserId();
+        List<TrialsSummary> summaries = (List<TrialsSummary>) trialsSummaryRepository.findAllById(trialIds);
+        LOG.info("summaries :{}", summaries);
+        AccountProfile account = null;
+        account = accountProfileRepository.findById(userId).get();
+        account.setSummaries(summaries);
+        account = accountProfileRepository.save(account);
+        LOG.info("Account :{}", account);
+        return mapper.writeValueAsString(account);
     }
 
 }
