@@ -102,7 +102,7 @@ public class MyAccountController {
 
 
     @PostMapping(value = "/addAdminUser" , headers = "Accept=application/json")
-    public AccountProfileResponse addadminUserByAdmin(@RequestBody AccountProfile profile) throws JsonProcessingException{
+    public String addadminUserByAdmin(@RequestBody AccountProfile profile) throws JsonProcessingException{
 		AccountProfileResponse accountProfileResponse = new AccountProfileResponse();
         if(profile != null && profile.getPassword() != null) {
             profile.setPassword(bcryptEncoder.encode(profile.getPassword()));
@@ -116,7 +116,7 @@ public class MyAccountController {
 				accountProfileResponse.setErrorMessage("Duplicate entry for user");
 			}
 		}
-		return accountProfileResponse;
+		return mapper.writeValueAsString(accountProfileResponse);;
     }
 
 
