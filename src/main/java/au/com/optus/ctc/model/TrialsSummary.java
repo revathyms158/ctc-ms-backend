@@ -401,4 +401,7 @@ public class TrialsSummary {
     @Setter(AccessLevel.PROTECTED)
     @LastModifiedDate
     private Date updatedOn;
+
+
+
 }

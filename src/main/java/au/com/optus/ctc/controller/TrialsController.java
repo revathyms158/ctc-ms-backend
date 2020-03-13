@@ -167,13 +167,7 @@ public class TrialsController {
     }
 
 
-    /*@PostMapping(value = "/userSpecificTrialSummary/{userID}", headers = "Accept=application/json")
-    public String fetchUserSpecificTrialSummary(@PathVariable final Long userID)  throws JsonProcessingException {
-        AccountProfile account = accountProfileRepository.findById(userID).get();
-        return mapper.writeValueAsString(account);
-    }
 
-*/
     @PostMapping(value = "/removeUser/{userID}", headers = "Accept=application/json")
     public String fetchRemovedTrials(@PathVariable final Long userID)  throws JsonProcessingException {
         AccountProfile account = null;
@@ -184,27 +178,36 @@ public class TrialsController {
         return mapper.writeValueAsString(account);
     }
 
-   /* @GetMapping(value = "/trialsSummary",  headers = "Accept=application/json")
-    public String getAllUsersSavedTrialSummary() throws JsonProcessingException {
-        List<TrialsSummary> summaries = trialsSummaryRepository.findAll();
-        LOG.info("trial summary :{}", summaries);
+
+    /*@GetMapping(value = "/userFavouriteTrials", headers = "Accept=application/json")
+    public String userFavouriteTrials(@RequestBody TrialsSpecificParams params) throws JsonProcessingException {
+        List<TrialsSummary> summaries = null;
+        Long trialId = params.getTrialId();
+        Long userId = params.getUserId();
+        AccountProfile account = null;
+        account = accountProfileRepository.findById(userId).get();
+        TrialsSummary summary = trialsSummaryRepository.findById(trialId).get();
+        summaries.add(summary);
+        account.setSummaries(summaries);
+        account = accountProfileRepository.save(account);
+        LOG.info("trial summary :{}", account);
         return mapper.writeValueAsString(summaries);
     }*/
 
-    @GetMapping(value = "/userFavouriteTrials", headers = "Accept=application/json")
+
+    @PostMapping(value = "/userFavouriteTrials", headers = "Accept=application/json")
     public String userFavouriteTrials(@RequestBody TrialsSpecificParams params) throws JsonProcessingException {
+        List<TrialsSummary> summaries = null;
         Long trialId = params.getTrialId();
         Long userId = params.getUserId();
-        /*List<TrialsSummary> summaries = (List<TrialsSummary>) trialsSummaryRepository.findAllById(trialIds);
-        LOG.info("summaries :{}", summaries);
         AccountProfile account = null;
         account = accountProfileRepository.findById(userId).get();
-        account.setSummaries(summaries);
+        TrialsSummary summary = trialsSummaryRepository.findById(trialId).get();
+        account.getSummaries().add(summary);
         account = accountProfileRepository.save(account);
-        LOG.info("Account :{}", account);*/
-        return null;
+        LOG.info("trial summary :{}", account);
+        return mapper.writeValueAsString(account);
     }
-
 
 
 }

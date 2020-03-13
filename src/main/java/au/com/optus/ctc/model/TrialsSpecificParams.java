@@ -12,9 +12,10 @@ import java.util.List;
  * Created by optus on 12/3/20.
  */
 
-@Data
+
 @RequiredArgsConstructor
 @AllArgsConstructor
+@Data
 public class TrialsSpecificParams {
 
     private Long userId;

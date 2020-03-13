@@ -28,6 +28,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,9 +90,13 @@ public class AccountProfile {
     private GenderEnum gender;
 
 
+    public void setDob(String dob) {
+        this.dob = dob;
+    }
+
     @Column(name = "dob")
     @JsonProperty
-    private Date dob;
+    private String dob;
 
 
     @Column(name = "address")
@@ -122,16 +128,12 @@ public class AccountProfile {
     private List<TrialsSummary> summaries = new ArrayList<TrialsSummary>();
 
     @Column(name = "created_on", nullable = false, updatable = false)
-// @Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.PROTECTED)
-    @CreatedDate
-    private Date createdOn;
+    private String createdOn;
 
     @Column(name = "updated_on", nullable = false)
-// @Temporal(TemporalType.TIMESTAMP)
     @Setter(AccessLevel.PROTECTED)
-    @LastModifiedDate
-    private Date updatedOn;
+    private String updatedOn;
 
     public TrialCondition getCondition() {
         return condition;
@@ -156,6 +158,23 @@ public class AccountProfile {
     public void setStatus(String status) {
         this.status = status;
     }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public String getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(String updatedOn) {
+        this.updatedOn = updatedOn;
+    }
+
 
 
     /*public String getEmailAddress() {

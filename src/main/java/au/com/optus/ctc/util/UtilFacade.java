@@ -16,13 +16,11 @@ import java.util.Date;
 @Service
 public class UtilFacade {
 
-    public int calculateAge(Date dob) throws UsernameNotFoundException {
+    public int calculateAge(String dob) throws UsernameNotFoundException {
         int age = 0;
-
-        SimpleDateFormat dateformat3 = new SimpleDateFormat("yyyy-MM-dd");
         try {
 
-            Date dateOfBirth = dateformat3.parse(dateformat3.format(dob));
+            Date dateOfBirth = new SimpleDateFormat("yyyy-MM-dd").parse(dob);
             Calendar today = Calendar.getInstance();
             Calendar birthDate = Calendar.getInstance();
             birthDate.setTime(dateOfBirth);

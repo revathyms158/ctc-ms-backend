@@ -50,7 +50,7 @@ public class MyAccountControllerTest {
 		profile.setLastName("lastname");
 		profile.setAge(45);
 		profile.setGender(GenderEnum.F);
-        profile.setDob(new Date(12/12/1984));
+        profile.setDob("12-12-1984");
 		profile.setEmailAddress("email768976@mail.com");
 		profile.setPostCode("2113");
 		String json = mapper.writeValueAsString(profile);

@@ -25,8 +25,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
+import java.util.TimeZone;
 
 @CrossOrigin(origins = { "http://172.31.5.10:4200" })
 @RestController
@@ -52,7 +55,7 @@ public class MyAccountController {
 
 
 	@PostMapping(value = "/myaccount/createAccountProfile", headers = "Accept=application/json")
-	public AccountProfileResponse createAccountProfile(@RequestBody AccountProfile profile)
+	public String createAccountProfile(@RequestBody AccountProfile profile)
 			throws JsonProcessingException {
 		LOG.info("accountProfile ___________________________________________, {}", profile.toString());
 
@@ -66,8 +69,10 @@ public class MyAccountController {
 			profile.setAge(age);
 		}
 		profile.setCondition(null);
-
+		profile.setCreatedOn(java.time.LocalDate.now().toString());
+		profile.setUpdatedOn(java.time.LocalDate.now().toString());
 		try{
+
 			AccountProfile user = repository.save(profile);
 			mapper.writeValueAsString(user);
 			LOG.info("Account creted {}", user);
@@ -80,7 +85,7 @@ public class MyAccountController {
 			}
 		}
 
-		return accountProfileResponse;
+		return mapper.writeValueAsString(accountProfileResponse);
 	}
 
 	@PostMapping(value = "/getAccountDetails", headers = "Accept=application/json")
@@ -113,5 +118,7 @@ public class MyAccountController {
 		}
 		return accountProfileResponse;
     }
+
+
 
 }
