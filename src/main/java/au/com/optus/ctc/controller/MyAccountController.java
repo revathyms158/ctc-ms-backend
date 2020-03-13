@@ -116,7 +116,7 @@ public class MyAccountController {
 				accountProfileResponse.setErrorMessage("Duplicate entry for user");
 			}
 		}
-		return mapper.writeValueAsString(accountProfileResponse);;
+		return mapper.writeValueAsString(accountProfileResponse);
     }
 
 
