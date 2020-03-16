@@ -47,8 +47,7 @@ public class MyAccountController {
 	@Autowired
 	private PasswordEncoder bcryptEncoder;
 
-	@Autowired
-	private UtilFacade utilFacade;
+
 
 	@Autowired(required = false)
 	MyAccountServiceIF filterService;
@@ -63,11 +62,6 @@ public class MyAccountController {
 		if(profile != null && profile.getPassword() != null) {
 			profile.setPassword(bcryptEncoder.encode(profile.getPassword()));
 		}
-
-		if(profile != null && profile.getDob() != null) {
-			int age = utilFacade.calculateAge(profile.getDob());
-			profile.setAge(age);
-		}
 		profile.setCondition(null);
 		profile.setCreatedOn(java.time.LocalDate.now().toString());
 		profile.setUpdatedOn(java.time.LocalDate.now().toString());
@@ -78,7 +72,6 @@ public class MyAccountController {
 			LOG.info("Account creted {}", user);
 			LOG.info("ID generated for Profile _____________, {}", user.getId());
 			accountProfileResponse.setId(user.getId());
-			accountProfileResponse.setAge(user.getAge());
 		} catch (Exception ex) {
 			if(ex.getMessage().startsWith("could not")) {
 				accountProfileResponse.setErrorMessage("Duplicate entry for user");

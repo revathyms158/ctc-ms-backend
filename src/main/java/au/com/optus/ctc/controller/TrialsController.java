@@ -9,6 +9,7 @@ import au.com.optus.ctc.model.TrialCondition;
 import au.com.optus.ctc.model.TrialsSpecificParams;
 import au.com.optus.ctc.model.TrialsSummary;
 import au.com.optus.ctc.service.TrialFilterServiceIF;
+import au.com.optus.ctc.util.UtilFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -31,6 +32,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static javafx.scene.input.KeyCode.L;
+import static org.apache.coyote.http11.Constants.a;
 
 /**
  * @author revathyms
@@ -61,54 +63,19 @@ public class TrialsController {
     @Autowired
     TrialsSummaryRepository trialsSummaryRepository;
 
-
-    /*@PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
-    public String fetchMatchingTrials(@RequestBody TrialCondition condition) throws JsonProcessingException {
-        LOG.info("inside fetchMatchingTrials():: condition ->{}", condition);
-        List<TrialsSummary> result = new ArrayList<>();
-        if(StringUtils.isBlank(condition.getGender())){
-            condition.setGender(GenderEnum.NA.value());
-        }
-        if(StringUtils.isBlank(condition.getTumourSize())){
-            condition.setTumourSize("Any");
-        }
-        if(StringUtils.isBlank(condition.getNodeNumber())){
-            condition.setNodeNumber("0");
-        }
-        if (StringUtils.isBlank(condition.getSpreadToOtherParts()) || StringUtils.equalsIgnoreCase(condition.getSpreadToOtherParts(),"Y/N")) {
-            condition.setSpreadToOtherParts("N");
-            result = filterService.getMatchingTrials(condition);
-        } else {
-            result = filterService.getMatchingTrials(condition);
-        }
-        LOG.info("result :{}", result);
-
-        if(condition !=null && condition.getAccountUserId()!= null){
-            Long id = condition.getAccountUserId();
-            Optional<AccountProfile> account = accountProfileRepository.findById(id);
-            LOG.info("Trial account details :{}", account);
-            System.out.println(account);
-            if(account != null) {
-                condition.setAccount(account.get());
-            }
-        }
-
-        TrialCondition trials = trialsConditionRepository.save(condition);
-        LOG.info("trial conditions :{}", trials);
-
-        if(result !=null && !result.isEmpty()) {
-          List<TrialsSummary> trialsSummaries = trialsSummaryRepository.saveAll(result);
-        }
-        return  mapper.writeValueAsString(result);
-    }*/
-
-
-
+    @Autowired
+    private UtilFacade utilFacade;
 
     @PostMapping(value = "/matchingTrials", headers = "Accept=application/json")
     public String fetchMatchingTrials(@RequestBody TrialCondition condition) throws JsonProcessingException {
         LOG.info("inside fetchMatchingTrials():: condition ->{}", condition);
         List<TrialsSummary> result = new ArrayList<>();
+
+        if(condition != null && condition.getDob() != null) {
+            int age = utilFacade.calculateAge(condition.getDob());
+            condition.setAge(age);
+        }
+
         if(StringUtils.isBlank(condition.getGender())){
             condition.setGender(GenderEnum.NA.value());
         }
@@ -203,11 +170,19 @@ public class TrialsController {
         AccountProfile account = null;
         account = accountProfileRepository.findById(userId).get();
         TrialsSummary summary = trialsSummaryRepository.findById(trialId).get();
-        account.getSummaries().add(summary);
-        account = accountProfileRepository.save(account);
+        /*if(account.getSummaries() != null && account.getSummaries().size() !=0) {
+            for(TrialsSummary trialSummary : account.getSummaries()) {
+                 if(trialSummary.getId_trials_summary() != trialId) {
+                     account.getSummaries().add(summary);
+                     account = accountProfileRepository.save(account);
+                 }
+                break;
+            }
+        } */
+            account.getSummaries().add(summary);
+            account = accountProfileRepository.save(account);
+
         LOG.info("trial summary :{}", account);
         return mapper.writeValueAsString(account);
     }
-
-
 }

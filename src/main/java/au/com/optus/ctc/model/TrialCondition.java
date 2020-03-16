@@ -50,6 +50,10 @@ public class TrialCondition {
     @JsonProperty
     private int age;
 
+    @Column(name = "dob")
+    @JsonProperty
+    private String dob;
+
     @Column(name = "postCode")
     @JsonProperty
     private String postCode;
@@ -224,6 +228,14 @@ public class TrialCondition {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getDob() {
+        return dob;
+    }
+
+    public void setDob(String dob) {
+        this.dob = dob;
     }
 
     public String getPostCode() {

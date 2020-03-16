@@ -7,8 +7,6 @@ public class AccountProfileResponse {
 	private Long id;
 	@JsonProperty
 	private String errorMessage;
-	@JsonProperty
-	private int age;
 
 	public Long getId() {
 		return id;
@@ -26,11 +24,5 @@ public class AccountProfileResponse {
 		this.errorMessage = errorMessage;
 	}
 
-	public int getAge() {
-		return age;
-	}
 
-	public void setAge(int age) {
-		this.age = age;
-	}
 }

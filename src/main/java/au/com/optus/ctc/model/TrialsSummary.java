@@ -403,5 +403,11 @@ public class TrialsSummary {
     private Date updatedOn;
 
 
+    public Long getId_trials_summary() {
+        return id_trials_summary;
+    }
 
+    public void setId_trials_summary(Long id_trials_summary) {
+        this.id_trials_summary = id_trials_summary;
+    }
 }

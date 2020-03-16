@@ -33,6 +33,7 @@ import javax.persistence.TemporalType;
 import javax.persistence.UniqueConstraint;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -79,11 +80,6 @@ public class AccountProfile {
     private String lastName;
 
 
-    @Column(name = "age")
-    @JsonProperty
-    private int age;
-
-
     @Enumerated(EnumType.STRING)
     @Column(name = "gender")
     @JsonProperty
@@ -116,16 +112,12 @@ public class AccountProfile {
     @JoinColumn(name="account_ques_id")
     private TrialCondition condition;
 
-  /*  @OneToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
-    @JoinColumn(name = "user_summary_id")
-    private List<TrialsSummary> summaries;*/
-
 
     @ManyToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
     @JoinTable(name = "USER_TrialsSummary",
             joinColumns = { @JoinColumn(name = "User_ID") },
             inverseJoinColumns = { @JoinColumn(name = "TrialSummary_ID") })
-    private List<TrialsSummary> summaries = new ArrayList<TrialsSummary>();
+    private Set<TrialsSummary> summaries = new HashSet<>();
 
     @Column(name = "created_on", nullable = false, updatable = false)
     @Setter(AccessLevel.PROTECTED)
@@ -135,54 +127,28 @@ public class AccountProfile {
     @Setter(AccessLevel.PROTECTED)
     private String updatedOn;
 
-    public TrialCondition getCondition() {
-        return condition;
+    public Long getId() {
+        return id;
     }
 
-    public void setCondition(TrialCondition condition) {
-        this.condition = condition;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public List<TrialsSummary> getSummaries() {
-        return summaries;
-    }
-
-    public void setSummaries(List<TrialsSummary> summaries) {
-        this.summaries = summaries;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(String createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public String getUpdatedOn() {
-        return updatedOn;
-    }
-
-    public void setUpdatedOn(String updatedOn) {
-        this.updatedOn = updatedOn;
-    }
-
-
-
-    /*public String getEmailAddress() {
+    public String getEmailAddress() {
         return emailAddress;
     }
 
     public void setEmailAddress(String emailAddress) {
         this.emailAddress = emailAddress;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getFirstName() {
@@ -201,14 +167,6 @@ public class AccountProfile {
         this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
     public GenderEnum getGender() {
         return gender;
     }
@@ -217,12 +175,8 @@ public class AccountProfile {
         this.gender = gender;
     }
 
-    public Date getDob() {
+    public String getDob() {
         return dob;
-    }
-
-    public void setDob(Date dob) {
-        this.dob = dob;
     }
 
     public String getPostCode() {
@@ -233,6 +187,14 @@ public class AccountProfile {
         this.postCode = postCode;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public Set<Role> getRoles() {
         return roles;
     }
@@ -241,19 +203,41 @@ public class AccountProfile {
         this.roles = roles;
     }
 
-
-    public String getPassword() {
-        return password;
+    public TrialCondition getCondition() {
+        return condition;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }*/
+    public void setCondition(TrialCondition condition) {
+        this.condition = condition;
+    }
+
+    public Set<TrialsSummary> getSummaries() {
+        return summaries;
+    }
+
+    public void setSummaries(Set<TrialsSummary> summaries) {
+        this.summaries = summaries;
+    }
+
+    public String getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(String createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public String getUpdatedOn() {
+        return updatedOn;
+    }
+
+    public void setUpdatedOn(String updatedOn) {
+        this.updatedOn = updatedOn;
+    }
 
     @Override
     public String toString() {
-        return "AccountProfile [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", age=" + age
-                + ", gender=" + gender + ", dob=" + dob + ", emailAddress=" + emailAddress + ", postCode=" + postCode
+        return "AccountProfile [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender + ", dob=" + dob + ", emailAddress=" + emailAddress + ", postCode=" + postCode
                 + ", createdOn=" + createdOn + ", updatedOn=" + updatedOn + "]";
     }
 }

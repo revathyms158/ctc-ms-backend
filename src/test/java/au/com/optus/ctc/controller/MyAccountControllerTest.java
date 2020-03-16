@@ -48,7 +48,6 @@ public class MyAccountControllerTest {
 		AccountProfile profile = new AccountProfile();
 		profile.setFirstName("firstName4");
 		profile.setLastName("lastname");
-		profile.setAge(45);
 		profile.setGender(GenderEnum.F);
         profile.setDob("12-12-1984");
 		profile.setEmailAddress("email768976@mail.com");
