@@ -63,6 +63,7 @@ public class MyAccountController {
 			profile.setPassword(bcryptEncoder.encode(profile.getPassword()));
 		}
 		profile.setCondition(null);
+        profile.setStatus("Active");
 		profile.setCreatedOn(java.time.LocalDate.now().toString());
 		profile.setUpdatedOn(java.time.LocalDate.now().toString());
 		try{
