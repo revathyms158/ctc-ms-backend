@@ -188,25 +188,7 @@ public class TrialsController {
     
     @PostMapping(value = "/updateTrialSummary", headers = "Accept=application/json")
     public String userFavouriteTrials(@RequestBody String csv) throws JsonProcessingException {
-        List<TrialsSummary> summaries = null;
-        Long trialId = params.getTrialId();
-        Long userId = params.getUserId();
-        AccountProfile account = null;
-        account = accountProfileRepository.findById(userId).get();
-        TrialsSummary summary = trialsSummaryRepository.findById(trialId).get();
-        /*if(account.getSummaries() != null && account.getSummaries().size() !=0) {
-            for(TrialsSummary trialSummary : account.getSummaries()) {
-                 if(trialSummary.getId_trials_summary() != trialId) {
-                     account.getSummaries().add(summary);
-                     account = accountProfileRepository.save(account);
-                 }
-                break;
-            }
-        } */
-            account.getSummaries().add(summary);
-            account = accountProfileRepository.save(account);
-
-        LOG.info("trial summary :{}", account);
-        return mapper.writeValueAsString(account);
+        
+        return "Action Performed";
     }
 }
